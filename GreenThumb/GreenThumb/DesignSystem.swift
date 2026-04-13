@@ -44,6 +44,10 @@ extension Color {
     static let gtBadgeGreenText  = Color(hex: "78A33E")
     static let gtBadgePurpleBg   = Color(hex: "E6DDF2")
     static let gtBadgePurpleText = Color(hex: "9370DB")
+    
+    // Safety & Warnings
+    static let gtSafetyBg        = Color(hex: "FDE7E7")
+    static let gtSafetyBorder    = Color(hex: "EE9E9E")
 }
 
 // MARK: - Color Extension for Hex
@@ -139,4 +143,3 @@ extension View {
         self.shadow(color: shadow.color, radius: shadow.radius, x: shadow.x, y: shadow.y)
     }
 }
-
