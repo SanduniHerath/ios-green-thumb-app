@@ -1,15 +1,28 @@
 import SwiftUI
 
 @main
-struct green_thumb_appApp: App {
+struct GreenThumbApp: App {
     @StateObject private var router         = AppRouter()
+    @StateObject private var authVM         = AuthViewModel()
     
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if authVM.isAuthenticated {
+                MainTabView()
+                    .environmentObject(router)
+                    .environmentObject(authVM)
+                    
+            } else {
+                SplashScreenView()
+                    .environmentObject(router)
+                    .environmentObject(authVM)
+                    
+            }
         }
     }
 }
+
+
 
 
