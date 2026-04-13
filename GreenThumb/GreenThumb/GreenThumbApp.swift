@@ -1,17 +1,15 @@
-//
-//  GreenThumbApp.swift
-//  GreenThumb
-//
-//  Created by Sanduni on 2026-04-13.
-//
-
 import SwiftUI
 
 @main
-struct GreenThumbApp: App {
+struct green_thumb_appApp: App {
+    @StateObject private var router         = AppRouter()
+    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
     }
 }
+
+
