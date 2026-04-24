@@ -214,16 +214,70 @@ struct GTAvatar: View {
     var name: String = ""
     var imageURL: String? = nil
     var size: CGFloat = 44
+    var showBadge: Bool = true
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottomTrailing) {
             Circle()
-                .fill(Color.gtPaleGreen)
+                .fill(Color.gtDarkGreen)
                 .frame(width: size, height: size)
-            Text(String(name.prefix(1)).uppercased())
-                .font(.system(size: size * 0.4, weight: .bold, design: .rounded))
-                .foregroundColor(.gtDarkGreen)
+                .overlay(
+                    Text(initials.uppercased())
+                        .font(.system(size: size * 0.35, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                )
+            
+            if showBadge {
+                ZStack {
+                    Circle().fill(Color.white).frame(width: size * 0.35, height: size * 0.35)
+                    Image(systemName: "leaf.fill")
+                        .font(.system(size: size * 0.2))
+                        .foregroundColor(Color.gtAccentGreen)
+                }
+                .offset(x: -2, y: -2)
+            }
         }
+    }
+
+    private var initials: String {
+        name.components(separatedBy: " ")
+            .compactMap { $0.first }
+            .map { String($0) }
+            .prefix(2)
+            .joined()
+    }
+}
+
+struct GTBadgeComponent: View {
+    let text: String
+    var body: some View {
+        Text(text)
+            .font(GTFont.labelSmall())
+            .foregroundColor(Color.gtForestGreen.opacity(0.8))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(Color.gtLightGreen.opacity(0.5))
+            .clipShape(Capsule())
+    }
+}
+
+struct GTStatItem: View {
+    let value: String
+    let label: String
+    var body: some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(GTFont.displaySmall())
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundColor(.white)
+            
+            Text(label)
+                .font(.system(size: 11, weight: .medium, design: .rounded))
+                .foregroundColor(.gtLightGreen.opacity(0.8))
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -357,3 +411,92 @@ struct GTAuthHeader: View {
     }
 }
 
+struct GTStreakAlertCard: View {
+    let streak: Int
+    let best: Int
+    
+    var body: some View {
+        HStack(spacing: GTSpacing.md) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 38))
+                .foregroundColor(.orange)
+                .padding(.leading, 8)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("\(streak)-day watering streak!")
+                    .font(GTFont.labelLarge())
+                    .foregroundColor(.gtTextPrimary)
+                
+                Text("Keep it up – personal best is \(best) days")
+                    .font(GTFont.bodySmall())
+                    .foregroundColor(.gtTextSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            
+            Spacer()
+        }
+        .padding(GTSpacing.lg)
+        .background(
+            RoundedRectangle(cornerRadius: GTRadius.lg)
+                .fill(Color(hex: "F4E7C4").opacity(0.8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: GTRadius.lg)
+                        .stroke(Color.orange.opacity(0.3), lineWidth: 1.5)
+                )
+        )
+    }
+}
+
+struct GTSessionHistoryRow: View {
+    let expert: String
+    let topic: String
+    let detail: String
+    let rating: Int
+    let date: String
+    let initials: String
+    let color: Color
+    
+    var body: some View {
+        HStack(spacing: GTSpacing.md) {
+            ZStack {
+                Circle()
+                    .fill(color)
+                    .frame(width: 48, height: 48)
+                Text(initials)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+            }
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(expert)
+                    .font(GTFont.labelLarge())
+                    .foregroundColor(.gtTextPrimary)
+                
+                Text(topic)
+                    .font(GTFont.bodySmall())
+                    .foregroundColor(.gtTextSecondary)
+                
+                Text(detail)
+                    .font(GTFont.bodySmall())
+                    .foregroundColor(.gtTextSecondary)
+            }
+            
+            Spacer()
+            
+            VStack(alignment: .trailing, spacing: 4) {
+                HStack(spacing: 2) {
+                    ForEach(0..<5) { index in
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(index < rating ? .orange : Color.gtSeparator)
+                    }
+                }
+                
+                Text(date)
+                    .font(GTFont.labelSmall())
+                    .foregroundColor(.gtTextMuted)
+            }
+        }
+        .padding(.vertical, GTSpacing.md)
+    }
+}
