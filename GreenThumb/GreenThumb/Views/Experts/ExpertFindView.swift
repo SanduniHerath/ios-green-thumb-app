@@ -115,10 +115,6 @@ struct ExpertFindView: View {
     }
 }
 
-// MARK: - Nearby Map stubs
-struct NearbyExpertsMapView: View {
-    var body: some View { Text("Nearby Experts Map").font(GTFont.displaySmall()) }
-}
 
 #Preview { ExpertFindView().environmentObject(ExpertViewModel()).environmentObject(AppRouter())
         .environmentObject(AuthViewModel()).environmentObject(PlantViewModel())
