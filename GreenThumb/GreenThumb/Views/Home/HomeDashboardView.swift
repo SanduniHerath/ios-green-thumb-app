@@ -108,8 +108,23 @@ struct HomeDashboardView: View {
             .background(Color.gtForestGreen.ignoresSafeArea())
             .navigationDestination(isPresented: $showNotifications) { NotificationsView() }
             .navigationDestination(for: AppRoute.self) { route in
-                if case .gardenAnalytics = route {
+                switch route {
+                case .gardenAnalytics:
                     GardenAnalyticsView()
+                case .plantDetails(let plant):
+                    PlantDetailsView(plant: plant)
+                case .growthTimeline(let plant):
+                    PlantTimelineView(plant: plant)
+                case .addPlant:
+                    AddPlantView()
+                case .careGuide:
+                    CareGuideView()
+                case .diagnosisResult:
+                    DiagnosisResultView()
+                case .nearbyExperts:
+                    NearbyExpertsMapView()
+                default:
+                    EmptyView()
                 }
             }
         }
@@ -232,4 +247,3 @@ struct HomeTaskRow: View {
         .environmentObject(CommunityViewModel()).environmentObject(NotificationsViewModel())
         .environmentObject(ProfileViewModel())
 }
-
