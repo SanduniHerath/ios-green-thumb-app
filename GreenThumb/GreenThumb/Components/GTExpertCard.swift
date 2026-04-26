@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GTExpertCard: View {
     let expert: ExpertModel
+    var onViewProfile: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: GTSpacing.md) {
@@ -109,7 +110,7 @@ struct GTExpertCard: View {
                 
                 Spacer()
                 
-                Button(action: {}) {
+                Button(action: { onViewProfile?() }) {
                     Text("View Profile")
                         .font(GTFont.labelSmall())
                         .foregroundColor(.gtDarkGreen)
@@ -179,4 +180,3 @@ struct GTExpertCard: View {
         ForEach(ExpertModel.samples) { e in GTExpertCard(expert: e) }
     }.padding()
 }
-

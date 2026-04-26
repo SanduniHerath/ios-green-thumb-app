@@ -12,7 +12,7 @@ struct ExpertProfileView: View {
             // Header Section
             VStack(spacing: 0) {
                 HStack {
-                    Button(action: { dismiss() }) {
+                    Button(action: { router.pop() }) {
                         ZStack {
                             Circle()
                                 .fill(.white)

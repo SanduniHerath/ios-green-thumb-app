@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CareGuideView: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var router: AppRouter
     @State private var selectedTab = 0 // 0: Watering, 1: Fertiliser
     @State private var currentAppTab = 2 // Diagnose tab is active in the screenshot
 
@@ -17,7 +17,7 @@ struct CareGuideView: View {
                     // Back and Status
                     HStack(spacing: 12) {
                         Button {
-                            dismiss()
+                            router.pop()
                         } label: {
                             ZStack {
                                 Circle()
@@ -60,8 +60,7 @@ struct CareGuideView: View {
             }
             .background(Color.gtTreatmentBg)
             
-            // Tab Bar
-            GTTabBar(selectedTab: $currentAppTab)
+            
         }
         .navigationBarHidden(true)
         .background(Color.gtForestGreen.ignoresSafeArea())

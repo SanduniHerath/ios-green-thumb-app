@@ -133,6 +133,12 @@ struct PlantListView: View {
                     AddObservationView(plant: plant)
                 case .addPlant:
                     AddPlantView()
+                case .careGuide:
+                    CareGuideView()
+                case .smartScheduler:
+                    SmartSchedulerView()
+                case .diagnosisResult:
+                    DiagnosisResultView()
                 default:
                     EmptyView()
                 }

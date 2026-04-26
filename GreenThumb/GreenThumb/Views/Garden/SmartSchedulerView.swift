@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SmartSchedulerView: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var router: AppRouter
     @State private var currentAppTab = 1 // My Garden tab is active in the screenshot
     @State private var completedTaskIds: Set<String> = ["task_tomatoes"] // Tomatoes starts as done
     
@@ -15,7 +15,7 @@ struct SmartSchedulerView: View {
                 
                 VStack(alignment: .leading, spacing: 16) {
                     Button {
-                        dismiss()
+                        router.pop()
                     } label: {
                         ZStack {
                             Circle()
@@ -28,7 +28,7 @@ struct SmartSchedulerView: View {
                     }
                     .padding(.top, 44)
                     
-                    Text("Schedular")
+                    Text("Scheduler")
                         .font(GTFont.displayLarge())
                         .foregroundColor(.white)
                 }
@@ -92,8 +92,7 @@ struct SmartSchedulerView: View {
             }
             .background(Color.gtTreatmentBg)
             
-            // Tab Bar
-            GTTabBar(selectedTab: $currentAppTab)
+            
         }
         .navigationBarHidden(true)
         .background(Color.gtForestGreen.ignoresSafeArea())

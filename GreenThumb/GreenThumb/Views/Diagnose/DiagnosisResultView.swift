@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DiagnosisResultView: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var router: AppRouter
     @EnvironmentObject var diagnoseVM: DiagnoseViewModel
     @State private var selectedTab = 2 // "Diagnose" is index 2
 
@@ -18,7 +18,7 @@ struct DiagnosisResultView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             // Back Button
                             Button {
-                                dismiss()
+                                router.pop()
                             } label: {
                                 ZStack {
                                     Circle()
@@ -133,7 +133,9 @@ struct DiagnosisResultView: View {
                             GTButton(
                                 title: "View full care guide",
                                 style: .primary,
-                                action: {}
+                                action: {
+                                    router.navigate(to: .careGuide)
+                                }
                             )
                             
                             GTButton(
@@ -152,8 +154,7 @@ struct DiagnosisResultView: View {
             }
             .ignoresSafeArea(edges: .top)
             
-            // Tab Bar
-            GTTabBar(selectedTab: $selectedTab)
+           
         }
         .navigationBarHidden(true)
         .background(Color.gtTreatmentBg.ignoresSafeArea())

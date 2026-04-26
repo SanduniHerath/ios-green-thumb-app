@@ -102,10 +102,16 @@ struct PlantDetailsView: View {
 
                         // Action Grid
                         HStack(spacing: 0) {
-                            GTDetailActionButton(icon: "drop.fill", label: "Water", color: .gtWatering) {}
+                            GTDetailActionButton(icon: "drop.fill", label: "Water", color: .gtWatering) {
+                                                        router.navigate(to: .careGuide)
+                            }
                             GTDetailActionButton(icon: "exclamationmark.triangle", label: "Diagnose", color: .gtStatusUrgent, hasAlert: true) {}
-                            GTDetailActionButton(icon: "book", label: "Care guide", color: .gtDarkGreen) {}
-                            GTDetailActionButton(icon: "calendar.badge.clock", label: "Schedule", color: .orange) {}
+                            GTDetailActionButton(icon: "book", label: "Care guide", color: .gtDarkGreen) {
+                                                        router.navigate(to: .careGuide)
+                            }
+                            GTDetailActionButton(icon: "calendar.badge.clock", label: "Schedule", color: .orange) {
+                                                           router.navigate(to: .smartScheduler)
+                            }
                         }
                         .padding(.vertical, 18)
                         .background(
