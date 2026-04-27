@@ -105,7 +105,13 @@ struct HomeDashboardView: View {
                     .background(Color(red:0.95, green:0.95, blue:0.95))
                 }
             }
-            .background(Color.gtForestGreen.ignoresSafeArea())
+            .background(
+                VStack(spacing: 0) {
+                    Color.gtForestGreen.frame(height: 400)
+                    Color(red: 0.95, green: 0.95, blue: 0.95)
+                }
+                .ignoresSafeArea()
+            )
             .navigationDestination(isPresented: $showNotifications) { NotificationsView() }
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {

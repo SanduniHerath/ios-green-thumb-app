@@ -8,6 +8,7 @@ struct SignInView: View {
     var body: some View {
         VStack(spacing: 0) {
             GTAuthHeader()
+                
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: GTSpacing.lg) {

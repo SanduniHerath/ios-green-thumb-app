@@ -36,7 +36,7 @@ struct UserProfileView: View {
                             .foregroundColor(.white)
                             .lineSpacing(-8)
                     }
-                    .padding(.horizontal, GTSpacing.lg)
+                    .padding(.horizontal, 105)
                     .padding(.bottom, selectedTab == 0 ? 0 : 20)
 
                     if selectedTab == 0 {
@@ -56,6 +56,7 @@ struct UserProfileView: View {
                             
                             GTBadgeComponent(text: profileVM.profile.userType)
                         }
+                        .padding(.horizontal, 80)
                         
                         // Stats Row
                         HStack {

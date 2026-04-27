@@ -8,6 +8,7 @@ struct OTPVerificationView: View {
     var body: some View {
         VStack(spacing: 0) {
             GTAuthHeader(onBack: { router.pop() })
+                .padding(.top, GTSpacing.xxl)
 
             // ── White content area ────────────────────────────────────
             VStack(spacing: GTSpacing.xl) {

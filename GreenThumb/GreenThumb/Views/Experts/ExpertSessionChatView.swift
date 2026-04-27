@@ -83,7 +83,7 @@ struct ExpertSessionChatView: View {
                     }
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 60)
+                .padding(.top, 80)
                 .padding(.bottom, 20)
                 .background(Color(hex: "F2F2F2")) // Header BG from SS
                 

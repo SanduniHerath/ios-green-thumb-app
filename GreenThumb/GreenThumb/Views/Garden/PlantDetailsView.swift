@@ -27,7 +27,7 @@ struct PlantDetailsView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 12)
+                .padding(.bottom, 80)
             }
             .frame(height: 110)
             

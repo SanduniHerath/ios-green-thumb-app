@@ -32,7 +32,7 @@ struct ExpertBookSessionView: View {
                 Spacer()
             }
             .padding(.horizontal, GTSpacing.lg)
-            .padding(.top, 50)
+            .padding(.top, 80)
             
             // Expert Info
             HStack(spacing: GTSpacing.md) {
