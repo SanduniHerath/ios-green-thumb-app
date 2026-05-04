@@ -139,6 +139,8 @@ struct PlantListView: View {
                     SmartSchedulerView()
                 case .diagnosisResult:
                     DiagnosisResultView()
+                case .notifications:
+                    NotificationsView()
                 default:
                     EmptyView()
                 }

@@ -129,6 +129,8 @@ struct HomeDashboardView: View {
                     DiagnosisResultView()
                 case .nearbyExperts:
                     NearbyExpertsMapView()
+                case .notifications:
+                    NotificationsView()
                 default:
                     EmptyView()
                 }

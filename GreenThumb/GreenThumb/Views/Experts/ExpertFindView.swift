@@ -11,7 +11,7 @@ struct ExpertFindView: View {
                 // Header
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
-                        Button(action: { router.pop() }) {
+                        Button(action: { router.navigate(to: .diagnosisResult) }) {
                             ZStack {
                                 Circle()
                                     .fill(.white)
@@ -100,6 +100,14 @@ struct ExpertFindView: View {
                     NearbyExpertsMapView()
                 case .expertProfile(let expert):
                     ExpertProfileView(expert: expert)
+                case .bookSession(let expert):
+                    ExpertBookSessionView(expert: expert)
+                case .expertChat(let expert):
+                    ExpertSessionChatView()
+                case .notifications:
+                    NotificationsView()
+                case .diagnosisResult:
+                    DiagnosisResultView()
                 default:
                     EmptyView()
                 }

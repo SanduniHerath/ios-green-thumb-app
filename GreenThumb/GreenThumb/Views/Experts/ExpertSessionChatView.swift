@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ExpertSessionChatView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var router: AppRouter
     @State private var messageText: String = ""
     @State private var isExpertTyping: Bool = false
     
@@ -18,7 +19,7 @@ struct ExpertSessionChatView: View {
             // MARK: - Header
             VStack(spacing: 0) {
                 HStack(spacing: 16) {
-                    Button(action: { dismiss() }) {
+                    Button(action: { router.pop() }) {
                         ZStack {
                             Circle()
                                 .fill(Color.white)

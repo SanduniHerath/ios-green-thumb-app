@@ -4,6 +4,7 @@ struct UserProfileView: View {
     @EnvironmentObject var profileVM:   ProfileViewModel
     @EnvironmentObject var authVM:      AuthViewModel
     @EnvironmentObject var communityVM: CommunityViewModel
+    @EnvironmentObject var router:      AppRouter
     @State private var showSettings = false
     @State private var selectedTab = 0
 
@@ -14,7 +15,7 @@ struct UserProfileView: View {
                 VStack(alignment: .leading, spacing: GTSpacing.md) {
                     // Top Navigation
                     HStack {
-                        Button { /* Back */ } label: {
+                        Button { router.selectedTab = 0 } label: {
                             Image(systemName: "arrow.left")
                                 .circleButton()
                         }
