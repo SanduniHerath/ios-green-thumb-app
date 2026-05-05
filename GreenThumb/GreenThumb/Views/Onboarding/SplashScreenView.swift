@@ -92,4 +92,3 @@ struct SplashScreenView: View {
         .environmentObject(NotificationsViewModel())
         .environmentObject(ProfileViewModel())
 }
-
