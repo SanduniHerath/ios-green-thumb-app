@@ -16,8 +16,14 @@ struct SymptomCheckerView: View {
                     
                     VStack(alignment: .leading, spacing: 20) {
                         // Back and Title
-                        HStack {
-                            Button { router.pop() } label: {
+                        HStack (spacing: 25){
+                            Button {
+                                if let plant = diagnoseVM.selectedPlant {
+                                    router.navigate(to: .plantDetails(plant))
+                                } else {
+                                    router.selectedTab = 1
+                                }
+                            } label: {
                                 ZStack {
                                     Circle().fill(Color.white).frame(width: 44, height: 44)
                                     Image(systemName: "arrow.left")
@@ -172,15 +178,21 @@ struct SymptomCheckerView: View {
             .ignoresSafeArea(edges: .top)
             .navigationBarHidden(true)
             .navigationDestination(for: AppRoute.self) { route in
-                           switch route {
-                           case .diagnosisResult:
-                               DiagnosisResultView()
-                           case .careGuide:
-                               CareGuideView()
-                           default:
-                               EmptyView()
-                           }
-                       }
+                switch route {
+                case .diagnosisResult:
+                    DiagnosisResultView()
+                case .careGuide:
+                    CareGuideView()
+                case .bookSession(let expert):
+                    ExpertBookSessionView(expert: expert)
+                case .notifications:
+                    NotificationsView()
+                case .plantDetails(let plant):
+                    PlantDetailsView(plant: plant)
+                default:
+                    EmptyView()
+                }
+            }
         }
     }
 }

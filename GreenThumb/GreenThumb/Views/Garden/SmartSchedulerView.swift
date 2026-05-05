@@ -26,7 +26,7 @@ struct SmartSchedulerView: View {
                                 .foregroundColor(.black)
                         }
                     }
-                    .padding(.top, 44)
+                    .padding(.top, 24)
                     
                     Text("Scheduler")
                         .font(GTFont.displayLarge())

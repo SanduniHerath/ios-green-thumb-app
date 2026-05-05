@@ -13,7 +13,10 @@ struct PlantDetailsView: View {
                 Color.gtForestGreen.ignoresSafeArea(edges: .top)
                 
                 HStack {
-                    Button { dismiss() } label: {
+                    Button {
+                        router.selectedTab = 1
+                        router.popToRoot()
+                    } label: {
                         ZStack {
                             Circle()
                                 .fill(Color.white)
@@ -27,7 +30,7 @@ struct PlantDetailsView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 12)
+                .padding(.bottom, 80)
             }
             .frame(height: 110)
             
@@ -103,14 +106,16 @@ struct PlantDetailsView: View {
                         // Action Grid
                         HStack(spacing: 0) {
                             GTDetailActionButton(icon: "drop.fill", label: "Water", color: .gtWatering) {
-                                                        router.navigate(to: .careGuide)
+                                router.navigate(to: .careGuide)
                             }
-                            GTDetailActionButton(icon: "exclamationmark.triangle", label: "Diagnose", color: .gtStatusUrgent, hasAlert: true) {}
+                            GTDetailActionButton(icon: "exclamationmark.triangle", label: "Diagnose", color: .gtStatusUrgent, hasAlert: true) {
+                                router.navigate(to: .diagnosisResult)
+                            }
                             GTDetailActionButton(icon: "book", label: "Care guide", color: .gtDarkGreen) {
-                                                        router.navigate(to: .careGuide)
+                                router.navigate(to: .careGuide)
                             }
                             GTDetailActionButton(icon: "calendar.badge.clock", label: "Schedule", color: .orange) {
-                                                           router.navigate(to: .smartScheduler)
+                                router.navigate(to: .smartScheduler)
                             }
                         }
                         .padding(.vertical, 18)
@@ -135,7 +140,9 @@ struct PlantDetailsView: View {
                                     }
                                     .frame(maxWidth: .infinity)
                                 }
-                                Button { withAnimation { selectedTab = 1 } } label: {
+                                Button {
+                                    router.navigate(to: .growthTimeline(plant))
+                                } label: {
                                     VStack(spacing: 14) {
                                         Text("Timeline")
                                             .font(GTFont.displaySmall())
@@ -240,4 +247,3 @@ struct PlantDetailsView: View {
     .environmentObject(NotificationsViewModel())
     .environmentObject(ProfileViewModel())
 }
-

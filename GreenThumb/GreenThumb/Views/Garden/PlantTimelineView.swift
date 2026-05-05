@@ -65,7 +65,7 @@ struct PlantTimelineView: View {
                             StatCapsule(value: "\(plant.careLogs.filter { $0.statusBadge != nil && $0.statusBadge != "Started tracking" }.count)", label: "Treatments")
                         }
                     }
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 52)
                 }
                 .padding(.horizontal, 24)
             }

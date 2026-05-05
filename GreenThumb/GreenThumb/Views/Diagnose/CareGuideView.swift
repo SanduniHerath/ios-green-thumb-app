@@ -10,7 +10,7 @@ struct CareGuideView: View {
             // MARK: - Dark Green Header
             ZStack(alignment: .topLeading) {
                 Color.gtForestGreen
-                    .frame(height: 220)
+                    .frame(height: 170)
                     .ignoresSafeArea(edges: .top)
                 
                 VStack(alignment: .leading, spacing: 16) {
@@ -33,7 +33,7 @@ struct CareGuideView: View {
                             .font(GTFont.labelLarge())
                             .foregroundColor(Color.gtAccentGreen)
                     }
-                    .padding(.top, 40)
+                    .padding(.top, 20)
                     
                     Text("Rose Bush")
                         .font(GTFont.displayLarge())

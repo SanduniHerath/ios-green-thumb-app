@@ -18,7 +18,7 @@ struct DiagnosisResultView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             // Back Button
                             Button {
-                                router.pop()
+                                router.selectedTab = 2
                             } label: {
                                 ZStack {
                                     Circle()
@@ -141,7 +141,11 @@ struct DiagnosisResultView: View {
                             GTButton(
                                 title: "Book expert",
                                 style: .expert,
-                                action: {}
+                                action: {
+                                    if let sampleExpert = ExpertModel.samples.first {
+                                        router.navigate(to: .bookSession(sampleExpert))
+                                    }
+                                }
                             )
                         }
                         .padding(.vertical, 32)
@@ -154,7 +158,8 @@ struct DiagnosisResultView: View {
             }
             .ignoresSafeArea(edges: .top)
             
-           
+            // Tab Bar
+            //GTTabBar(selectedTab: $selectedTab)
         }
         .navigationBarHidden(true)
         .background(Color.gtTreatmentBg.ignoresSafeArea())
