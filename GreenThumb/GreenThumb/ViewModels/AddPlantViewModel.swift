@@ -15,6 +15,7 @@ class AddPlantViewModel: ObservableObject {
     let locationOptions = ["Front garden", "Back garden", "Balcony", "Living Room", "Kitchen"]
     let potTypeOptions = ["Ground", "Ceramic Pot", "Plastic Pot", "Terracotta", "Raised Bed"]
     
+    // Actions
     var onSave: ((PlantModel) -> Void)?
     var onCancel: (() -> Void)?
     
@@ -30,10 +31,11 @@ class AddPlantViewModel: ObservableObject {
             healthScore: 100,
             imageURL: "plant_rose", // Default or selected image
             location: location,
-            dateAdded: Date(),
+            dateAdded: datePlanted,
             tags: tags,
             isOutdoor: potType == "Ground",
-            ageDays: ageDays
+            ageDays: ageDays,
+            initialNote: notes
         )
         
         print("Saving plant: \(name)")
@@ -49,4 +51,3 @@ class AddPlantViewModel: ObservableObject {
         tags.removeAll { $0 == tag }
     }
 }
-
