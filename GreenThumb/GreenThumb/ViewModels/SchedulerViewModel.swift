@@ -16,7 +16,7 @@ class SchedulerViewModel: ObservableObject {
     
     init() {
         fetchTasks() // Only uncomment to fetch all tasks globally
-        //seedTasks()  // Only uncomment once to seed
+        seedTasks()  // Only uncomment once to seed
     }
 
     func seedTasks() {
