@@ -103,9 +103,67 @@ class ExpertViewModel: ObservableObject {
         do {
             try db.collection("bookings").document(booking.id).setData(from: booking)
             self.bookingSuccess = true
+            
+            // 🔔 1. Immediate confirmation for demo
+            NotificationManager.shared.sendImmediateNotification(
+                id: "confirm-\(booking.id)",
+                title: "Session Confirmed! ✅",
+                body: "You have successfully booked a session with \(expert.name)."
+            )
+            
+            // 🔔 2. Schedule reminder 30 minutes before
+            scheduleExpertReminder(expertName: expert.name, date: date, timeSlot: timeSlot, bookingId: booking.id)
+            
+            // 🗓️ 3. Add to official Apple Calendar App
+            if let finalDate = getExactSessionDate(date: date, timeSlot: timeSlot) {
+                CalendarManager.shared.addEventToCalendar(
+                    title: "Green Thumb Session: \(expert.name)",
+                    description: "Agricultural consultation session booked via Green Thumb app.",
+                    startDate: finalDate
+                )
+                
+                // ✅ 4. Also add to official iOS Reminders App
+                CalendarManager.shared.addReminderToSystem(
+                    title: "Expert Session: \(expert.name) @ \(timeSlot)",
+                    dueDate: finalDate
+                )
+            }
+            
             print("✅ Session booked successfully!")
         } catch {
             print("❌ Error booking session: \(error.localizedDescription)")
+        }
+    }
+
+    private func getExactSessionDate(date: Date, timeSlot: String) -> Date? {
+        let calendar = Calendar.current
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        if let timeDate = formatter.date(from: timeSlot) {
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: timeDate)
+            dateComponents.hour = timeComponents.hour
+            dateComponents.minute = timeComponents.minute
+            return calendar.date(from: dateComponents)
+        }
+        return nil
+    }
+
+    private func scheduleExpertReminder(expertName: String, date: Date, timeSlot: String, bookingId: String) {
+        if let finalDate = getExactSessionDate(date: date, timeSlot: timeSlot) {
+            // 30 minutes before
+            let reminderDate = finalDate.addingTimeInterval(-30 * 60)
+            
+            // Only schedule if it's in the future
+            if reminderDate > Date() {
+                NotificationManager.shared.scheduleCalendarNotification(
+                    id: "expert-\(bookingId)",
+                    title: "Expert Session Reminder 👨‍🌾",
+                    body: "Your session with \(expertName) starts in 30 minutes!",
+                    date: reminderDate
+                )
+            }
         }
     }
 

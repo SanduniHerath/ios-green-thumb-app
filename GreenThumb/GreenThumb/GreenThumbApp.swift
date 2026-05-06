@@ -5,7 +5,8 @@ import Firebase
 struct GreenThumbApp: App {
     
     init() {
-            FirebaseApp.configure() 
+        FirebaseApp.configure()
+        NotificationManager.shared.requestAuthorization()
         }
     
     @StateObject private var router         = AppRouter()

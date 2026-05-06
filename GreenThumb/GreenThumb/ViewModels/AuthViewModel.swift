@@ -175,6 +175,7 @@ class AuthViewModel: ObservableObject {
     func signOut() {
         do {
             try Auth.auth().signOut()
+            self.selectedTab = 0 
             isAuthenticated = false
             errorMessage = nil
         } catch {
