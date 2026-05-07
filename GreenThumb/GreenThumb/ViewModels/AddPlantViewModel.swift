@@ -67,12 +67,18 @@ class AddPlantViewModel: ObservableObject {
     
     private func createAndSavePlant(imageURL: String?) {
         let ageDays = Calendar.current.dateComponents([.day], from: datePlanted, to: Date()).day ?? 0
+        
+        // 🌿 Age-based starting health: newly planted = ~95%, older plants have had more stress exposure
+        // Max penalty of -30 pts for plants over 300 days old
+        let agePenalty = min(Double(ageDays) * 0.10, 30.0)
+        let startingHealth = max(65.0, 97.0 - agePenalty)
+        
         let newPlant = PlantModel(
             name: name,
             species: species,
             status: .healthy,
-            healthScore: 100,
-            imageURL: imageURL, // ✅ Real Cloudinary URL or nil
+            healthScore: startingHealth,
+            imageURL: imageURL,
             location: location,
             dateAdded: datePlanted,
             tags: tags,
@@ -80,7 +86,7 @@ class AddPlantViewModel: ObservableObject {
             ageDays: ageDays,
             initialNote: notes
         )
-        print("🪴 Saving plant: \(name), image: \(imageURL ?? "none")")
+        print("🪴 Saving plant: \(name), health: \(Int(startingHealth))%, image: \(imageURL ?? "none")")
         onSave?(newPlant)
     }
 
