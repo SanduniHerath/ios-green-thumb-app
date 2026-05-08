@@ -42,8 +42,8 @@ GreenThumb leverages the full power of the iOS ecosystem to provide a seamless a
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/SanduniHerath/gt-app.git
-   cd green_thumb_app
+   git clone https://github.com/SanduniHerath/ios-green-thumb-app.git
+   cd ios-green-thumb-app
    ```
 
 2. **Setup Firebase**:
@@ -75,7 +75,7 @@ GreenThumb leverages the full power of the iOS ecosystem to provide a seamless a
 
 ## 📖 Documentation
 
-For a detailed technical breakdown of the architecture, data layer, and advanced system integrations, please refer to the [Full Code Documentation](Code_documentation.md).
+For a detailed technical breakdown of the architecture, data layer, and advanced system integrations, please refer to the [Full Code Documentation](GreenThumb/GreenThumb/Code_documentation.md).
 
 
 
