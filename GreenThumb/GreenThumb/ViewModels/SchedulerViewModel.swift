@@ -22,11 +22,11 @@ class SchedulerViewModel: ObservableObject {
     func seedTasks() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
-        // 1. DELETE all old tasks first to ensure a clean slate
+        //delete all old tasks
         db.collection(collectionName).whereField("userId", isEqualTo: userId).getDocuments { snapshot, _ in
             snapshot?.documents.forEach { $0.reference.delete() }
             
-            // 2. NOW create the fresh, correct tasks
+            //create the fresh new tasks
             self.db.collection("users").document(userId).collection("plants").getDocuments { snapshot, _ in
                 guard let docs = snapshot?.documents else { return }
                 
@@ -35,12 +35,12 @@ class SchedulerViewModel: ObservableObject {
                         self.generateDefaultTasks(for: plant)
                     }
                 }
-                print("✅ Clean Sweep Complete! Your database is now tidy.")
+                print("Clean Sweep Complete! Your database is now tidy.")
             }
         }
     }
 
-    /// 🪴 Generates the 4 standard care tasks for a specific plant
+    //generate tasks
     func generateDefaultTasks(for plant: PlantModel) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
@@ -64,21 +64,19 @@ class SchedulerViewModel: ObservableObject {
             )
             try? db.collection(collectionName).document(task.id).setData(from: task)
         }
-        print("📅 Created 4 default tasks for: \(plant.name)")
+        print("Created 4 default tasks for: \(plant.name)")
     }
 
     func fetchTasks(for plantId: String? = nil) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         isLoading = true
-        
-        // 1. STOP any existing listener so it doesn't fight with the new one
         listenerRegistration?.remove()
         
         var query = db.collection(collectionName)
             .whereField("userId", isEqualTo: userId)
         
-        // 2. APPLY strict plant filter if provided
+        //apply strict plant filter if provided
         if let pid = plantId, !pid.isEmpty {
             query = query.whereField("plantId", isEqualTo: pid)
             print("🔍 Filtering tasks for plant ID: \(pid)")
@@ -86,14 +84,14 @@ class SchedulerViewModel: ObservableObject {
             print("📋 Fetching all tasks for user")
         }
         
-        // 3. START the fresh listener
+        //start the fresh listener
         listenerRegistration = query.addSnapshotListener { [weak self] snapshot, error in
             guard let self = self else { return }
             self.isLoading = false
             
             if let error = error {
                 self.errorMessage = error.localizedDescription
-                print("❌ Firestore Error: \(error.localizedDescription)")
+                print("Firestore Error: \(error.localizedDescription)")
                 return
             }
             
@@ -101,9 +99,9 @@ class SchedulerViewModel: ObservableObject {
                 try? doc.data(as: SchedulerTaskModel.self)
             } ?? []
             
-            // Sort by date and time
+            //sort by date and time
             self.tasks = fetchedTasks.sorted(by: { $0.dueDate < $1.dueDate })
-            print("✅ Successfully fetched \(self.tasks.count) tasks")
+            print("Successfully fetched \(self.tasks.count) tasks")
         }
     }
 
@@ -113,9 +111,9 @@ class SchedulerViewModel: ObservableObject {
         
         docRef.updateData(["isCompleted": newStatus]) { error in
             if let error = error {
-                print("❌ Error updating task: \(error.localizedDescription)")
+                print("Error updating task: \(error.localizedDescription)")
             } else if newStatus {
-                // If marked as completed, cancel any pending notification
+                //if marked as completed cancel any future notifications
                 NotificationManager.shared.cancelNotification(id: task.id)
             }
         }
@@ -135,7 +133,7 @@ class SchedulerViewModel: ObservableObject {
         do {
             try db.collection(collectionName).document(newTask.id).setData(from: newTask)
             
-            // 🔔 Schedule the notification
+            //schedule the notifications
             NotificationManager.shared.scheduleCalendarNotification(
                 id: newTask.id,
                 title: "\(type.rawValue) Reminder \(type.icon)",
@@ -143,18 +141,15 @@ class SchedulerViewModel: ObservableObject {
                 date: dueDate
             )
         } catch {
-            print("❌ Error adding task: \(error.localizedDescription)")
+            print("Error adding task: \(error.localizedDescription)")
         }
     }
 
     var pendingTasks: [SchedulerTaskModel] { tasks.filter { !$0.isCompleted } }
     var completedTasks: [SchedulerTaskModel] { tasks.filter { $0.isCompleted } }
     
-    // Group tasks by date for the calendar/list with duplicate prevention
     func tasks(for date: Date) -> [SchedulerTaskModel] {
         let dayTasks = tasks.filter { Calendar.current.isDate($0.dueDate, inSameDayAs: date) }
-        
-        // Final safety check: ensure unique tasks in the UI
         var uniqueTasks: [SchedulerTaskModel] = []
         var seenKeys: Set<String> = []
         

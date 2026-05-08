@@ -10,7 +10,7 @@ struct GTSeasonalCalendar: View {
     struct MonthData: Identifiable {
         let id = UUID()
         let name: String
-        let intensity: Int // 1 to 5
+        let intensity: Int
     }
     
     let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -41,7 +41,7 @@ struct GTSeasonalCalendar: View {
                 }
             }
             
-            // Legend
+            
             HStack(spacing: 20) {
                 legendItem(color: Color.gtDiagnosisText, label: "Water daily")
                 legendItem(color: Color.gtBadgeYellowText, label: "Every 2 days")

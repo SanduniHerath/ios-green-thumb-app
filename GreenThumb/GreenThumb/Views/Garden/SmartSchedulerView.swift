@@ -5,12 +5,11 @@ struct SmartSchedulerView: View {
     @EnvironmentObject var viewModel: SchedulerViewModel
     @State private var selectedDate = Date()
     
-    // Optional plantId filter
     var plantId: String?
     
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - Dark Green Header
+           
             ZStack(alignment: .topLeading) {
                 Color.gtForestGreen
                     .frame(height: 180)
@@ -40,14 +39,14 @@ struct SmartSchedulerView: View {
             
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
-                    // Calendar
+                    
                     GTCalendarCard(
                         selectedDate: $selectedDate,
                         taskDates: viewModel.tasks.map { $0.dueDate }
                     )
                     .padding(.top, 8)
                     
-                    // Tasks Section
+                    //tesks section
                     VStack(alignment: .leading, spacing: 16) {
                         Text(Calendar.current.isDateInToday(selectedDate) ? "Tasks – Today" : "Tasks – \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
                             .font(GTFont.labelLarge())
@@ -73,7 +72,7 @@ struct SmartSchedulerView: View {
                                             title: "\(task.taskType.rawValue) \(task.plantName)",
                                             subtitle: task.notes ?? "Regular maintenance",
                                             time: task.isCompleted ? "Done" : task.dueDate.formatted(date: .omitted, time: .shortened),
-                                            frequency: "", // Can add this to model later
+                                            frequency: "", 
                                             iconName: iconForType(task.taskType),
                                             iconBgColor: bgColorForType(task.taskType),
                                             iconColor: colorForType(task.taskType),

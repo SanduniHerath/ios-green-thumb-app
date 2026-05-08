@@ -1,6 +1,5 @@
 import SwiftUI
 
-// MARK: - Info Card
 struct GTDetailInfoCard: View {
     let icon: String
     let value: String
@@ -32,7 +31,7 @@ struct GTDetailInfoCard: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 145) // Fixed height for uniformity
+        .frame(height: 145)
         .padding(.horizontal, 4)
         .background(
             RoundedRectangle(cornerRadius: 20)
@@ -46,7 +45,7 @@ struct GTDetailInfoCard: View {
     }
 }
 
-// MARK: - Action Button
+
 struct GTDetailActionButton: View {
     let icon: String
     let label: String
@@ -80,7 +79,7 @@ struct GTDetailActionButton: View {
     }
 }
 
-// MARK: - Note Entry
+
 struct GTNoteEntry: View {
     let dotColor: Color
     let content: String

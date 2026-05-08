@@ -1,6 +1,5 @@
 import SwiftUI
 
-// GreenThumb SVG-style logo rendered in pure SwiftUI
 struct GTLogoIcon: View {
     var size: CGFloat = 80
     var primaryColor: Color = .gtLightGreen
@@ -8,45 +7,45 @@ struct GTLogoIcon: View {
 
     var body: some View {
         ZStack {
-            // Left leaf
+            
             Ellipse()
                 .fill(primaryColor)
                 .frame(width: size * 0.48, height: size * 0.72)
                 .rotationEffect(.degrees(-30))
                 .offset(x: -size * 0.26, y: -size * 0.05)
 
-            // Right leaf
+            
             Ellipse()
                 .fill(primaryColor)
                 .frame(width: size * 0.48, height: size * 0.72)
                 .rotationEffect(.degrees(30))
                 .offset(x: size * 0.26, y: -size * 0.05)
 
-            // Centre top leaf
+            
             Ellipse()
                 .fill(primaryColor)
                 .frame(width: size * 0.40, height: size * 0.65)
                 .offset(x: 0, y: -size * 0.12)
 
-            // Ground arc
+            
             Ellipse()
                 .fill(primaryColor)
                 .frame(width: size * 0.90, height: size * 0.28)
                 .offset(y: size * 0.30)
 
-            // House body
+            
             RoundedRectangle(cornerRadius: 4)
                 .fill(houseColor)
                 .frame(width: size * 0.30, height: size * 0.22)
                 .offset(y: size * 0.08)
 
-            // House roof triangle
+            
             Triangle()
                 .fill(houseColor)
                 .frame(width: size * 0.42, height: size * 0.18)
                 .offset(y: -size * 0.04)
 
-            // Window
+            
             RoundedRectangle(cornerRadius: 2)
                 .fill(primaryColor.opacity(0.6))
                 .frame(width: size * 0.12, height: size * 0.12)
@@ -67,7 +66,7 @@ struct Triangle: Shape {
     }
 }
 
-// Inline header logo (small icon + "GreenThumb" text)
+
 struct GTLogoHeader: View {
     var iconSize: CGFloat = 32
     var textColor: Color  = .white

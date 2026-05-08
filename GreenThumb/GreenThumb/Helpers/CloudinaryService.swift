@@ -1,19 +1,13 @@
 import UIKit
 import Foundation
 
-/// Uploads images to Cloudinary using unsigned upload preset.
-/// No SDK needed — pure URLSession POST.
-///
-/// 🔧 SETUP: Replace these two constants with your own values from cloudinary.com
 struct CloudinaryService {
     
-    // ⚠️ REPLACE THESE WITH YOUR OWN CLOUDINARY VALUES
-    private static let cloudName   = "dpphlrsjg"     // e.g. "my-garden-app"
-    private static let uploadPreset = "green thumb" // e.g. "green_thumb_unsigned"
+   
+    private static let cloudName   = "dpphlrsjg"
+    private static let uploadPreset = "green thumb"
     
-    // ─────────────────────────────────────────────────────────────
-    /// Upload a UIImage and return its hosted URL string.
-    /// Throws if the network request fails or the response is invalid.
+   //upload an image and send it URL
     static func upload(image: UIImage) async throws -> String {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             throw URLError(.badURL)
@@ -23,16 +17,16 @@ struct CloudinaryService {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        // Build multipart/form-data body
+       
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         var body = Data()
         
-        // upload_preset field
+        //upload preset fil
         body.appendFormField(name: "upload_preset", value: uploadPreset, boundary: boundary)
         
-        // file field
+        //file field
         body.appendFileField(
             name: "file",
             fileName: "plant_\(Date().timeIntervalSince1970).jpg",
@@ -41,11 +35,11 @@ struct CloudinaryService {
             boundary: boundary
         )
         
-        // Close multipart body
+        
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body
         
-        // Execute request
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse,
@@ -54,19 +48,16 @@ struct CloudinaryService {
             throw NSError(domain: "Cloudinary", code: 0, userInfo: [NSLocalizedDescriptionKey: errorText])
         }
         
-        // Parse the secure URL from the response JSON
+        //parse the URL from the JSON object
         guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let secureURL = json["secure_url"] as? String else {
             throw NSError(domain: "Cloudinary", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse image URL from response"])
         }
         
-        print("✅ Cloudinary: Image uploaded → \(secureURL)")
+        print("Cloudinary: Image uploaded → \(secureURL)")
         return secureURL
     }
 }
-
-// ─────────────────────────────────────────────────────────────
-// MARK: - Data helpers for building multipart body
 
 private extension Data {
     mutating func appendFormField(name: String, value: String, boundary: String) {

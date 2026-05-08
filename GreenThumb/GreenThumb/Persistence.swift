@@ -6,7 +6,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        // 1. Define the "Blueprint" (Entity) for our Local Cache
+        
         let plantEntity = NSEntityDescription()
         plantEntity.name = "CachedPlant"
         plantEntity.managedObjectClassName = "CachedPlant"
@@ -33,11 +33,11 @@ struct PersistenceController {
         
         plantEntity.properties = [idAttr, nameAttr, speciesAttr, userIdAttr, imageURLAttr]
         
-        // 2. Create the Model
+        //create the model
         let model = NSManagedObjectModel()
         model.entities = [plantEntity]
         
-        // 3. Setup the Container
+        //setup the container
         container = NSPersistentContainer(name: "GreenThumbModel", managedObjectModel: model)
         
         if inMemory {
@@ -46,7 +46,7 @@ struct PersistenceController {
         
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
-                print("❌ Core Data failed to load: \(error.localizedDescription)")
+                print("Core Data failed to load: \(error.localizedDescription)")
             }
         }
         container.viewContext.automaticallyMergesChangesFromParent = true
@@ -57,15 +57,14 @@ struct PersistenceController {
         if context.hasChanges {
             do {
                 try context.save()
-                print("✅ Core Data: Changes saved successfully!")
+                print("Core Data: Changes saved successfully!")
             } catch {
-                print("❌ Core Data: Save error: \(error.localizedDescription)")
+                print("Core Data: Save error: \(error.localizedDescription)")
             }
         }
     }
 }
 
-// 4. Create the Managed Object class manually since we are using a code-based model
 @objc(CachedPlant)
 public class CachedPlant: NSManagedObject {
     @NSManaged public var id: String?

@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - Expert Find
+
 struct ExpertFindView: View {
     @EnvironmentObject var expertVM: ExpertViewModel
     @EnvironmentObject var router: AppRouter
@@ -8,7 +8,7 @@ struct ExpertFindView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack(spacing: 0) {
-                // Header
+                //header
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Button(action: { router.navigate(to: .diagnosisResult) }) {
@@ -37,7 +37,7 @@ struct ExpertFindView: View {
                     .padding(.horizontal, GTSpacing.lg)
                     .padding(.top, 80)
                     
-                    // Search Bar
+                    //search bar
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.white.opacity(0.8))
@@ -61,7 +61,7 @@ struct ExpertFindView: View {
                 }
                 .background(Color.gtForestGreen)
                 
-                // Filters
+                //filters
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: GTSpacing.md) {
                         filterChip(title: "All")
@@ -73,7 +73,7 @@ struct ExpertFindView: View {
                 }
                 .background(Color(hex: "F2F2F2"))
 
-                // Expert List with Footer
+                //experts list with footer
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: GTSpacing.md) {
                         ForEach(expertVM.filteredExperts) { expert in
@@ -82,7 +82,7 @@ struct ExpertFindView: View {
                             })
                         }
                         
-                        // Fixed Footer Button moved inside ScrollView
+                        
                         GTButton(title: "Find nearby agricultural officers", style: .primary) {
                             router.navigate(to: .nearbyExperts)
                         }

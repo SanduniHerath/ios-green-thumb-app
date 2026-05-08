@@ -14,13 +14,13 @@ struct AddObservationView: View {
             Color.gtBackground.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // MARK: - Header
+                
                 headerView
                     .padding(.top, GTSpacing.sm)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: GTSpacing.lg) {
-                        // MARK: - Form Fields
+                        //form fields
                         VStack(spacing: GTSpacing.md) {
                             GTPickerField(
                                 label: "Plant",
@@ -54,7 +54,7 @@ struct AddObservationView: View {
                                 )
                             }
                             
-                            // MARK: - Tags
+                            //tags
                             VStack(alignment: .leading, spacing: GTSpacing.xxs) {
                                 Text("Tags")
                                     .font(GTFont.labelMedium())
@@ -69,7 +69,7 @@ struct AddObservationView: View {
                                 }
                             }
                             
-                            // MARK: - Observation
+                            
                             GTTextArea(
                                 label: "Observation",
                                 placeholder: "Any observation about the plant...",
@@ -77,7 +77,7 @@ struct AddObservationView: View {
                             )
                         }
                         
-                        // MARK: - Action Buttons
+                        //action buttons
                         VStack(spacing: GTSpacing.sm) {
                             GTButton(
                                 title: "Add Observation",
@@ -117,8 +117,7 @@ struct AddObservationView: View {
         }
     }
     
-    // MARK: - Subviews
-    
+    //subviews
     private var headerView: some View {
         HStack(spacing: GTSpacing.md) {
             Button {
@@ -189,8 +188,6 @@ struct AddObservationView: View {
         }
     }
 }
-
-// Simple FlowLayout for Tags
 
 #Preview {
     AddObservationView(plant: PlantModel.samples[1])

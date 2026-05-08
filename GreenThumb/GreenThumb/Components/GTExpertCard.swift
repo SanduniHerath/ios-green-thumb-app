@@ -6,7 +6,7 @@ struct GTExpertCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: GTSpacing.md) {
-            // Header: Top Rated & Availability
+            
             HStack {
                 if expert.isTopRated {
                     HStack(spacing: 4) {
@@ -30,7 +30,7 @@ struct GTExpertCard: View {
             }
 
             HStack(alignment: .top, spacing: GTSpacing.md) {
-                // Avatar
+                
                 ZStack {
                     Circle()
                         .fill(avatarColor)
@@ -43,7 +43,7 @@ struct GTExpertCard: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(expert.name)
                         .font(GTFont.displaySmall())
-                        .font(.system(size: 18)) // Override slightly for card
+                        .font(.system(size: 18))
                         .foregroundColor(.gtTextPrimary)
                     
                     Text("\(expert.specialty) – \(expert.location)")
@@ -68,7 +68,7 @@ struct GTExpertCard: View {
                 }
             }
 
-            // Tags
+            //tags
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: GTSpacing.xs) {
                     ForEach(expert.tags, id: \.self) { tag in
@@ -83,7 +83,7 @@ struct GTExpertCard: View {
                 }
             }
             
-            // Available Slots
+           //available slots
             if !expert.availableSlots.isEmpty {
                 HStack(spacing: GTSpacing.sm) {
                     ForEach(expert.availableSlots.prefix(3)) { slot in
@@ -99,7 +99,7 @@ struct GTExpertCard: View {
                 }
             }
 
-            // Footer
+            //footer
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(expert.pricePerHour == 0 ? "Free – Govt (officer)" : "$\(Int(expert.pricePerHour))/hr")

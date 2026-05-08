@@ -5,7 +5,7 @@ struct GTCalendarCard: View {
     let taskDates: [Date] // Dates that should have a blue dot
     let days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
     
-    // Logic for May 2026
+    //Logic for 2026 May
     private var monthName: String {
         selectedDate.formatted(.dateTime.month(.wide).year())
     }
@@ -33,7 +33,7 @@ struct GTCalendarCard: View {
                 }
             }
             
-            // Calendar Content
+            //Calendar content
             VStack(spacing: 16) {
                 HStack(spacing: 0) {
                     ForEach(days, id: \.self) { day in
@@ -64,7 +64,7 @@ struct GTCalendarCard: View {
                                         .fill(isSelected ? Color.gtDarkGreen : (isToday ? Color.gtDarkGreen.opacity(0.1) : Color.clear))
                                 )
                             
-                            // Task Indicator Dot
+                        
                             Circle()
                                 .fill(hasTask ? Color.gtBadgeTealBg : Color.clear)
                                 .frame(width: 4, height: 4)

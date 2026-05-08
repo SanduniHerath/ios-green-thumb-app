@@ -7,9 +7,9 @@ import FirebaseAuth
 class DiagnoseViewModel: ObservableObject {
     @Published var symptomText: String = ""
     @Published var selectedSymptoms: [String] = []
-    @Published var severity: Double = 0.5 // 0.0: Mild, 0.5: Moderate, 1.0: Severe
+    @Published var severity: Double = 0.5
     @Published var selectedParts: Set<String> = ["Leaves", "Roots"]
-    @Published var selectedPlant: PlantModel? = nil   // Set by SymptomCheckerView plant picker
+    @Published var selectedPlant: PlantModel? = nil
     
     @Published var currentResult: DiagnosisResultData? = nil
     @Published var isAnalyzing: Bool = false
@@ -25,32 +25,31 @@ class DiagnoseViewModel: ObservableObject {
     func fetchKnowledgeBase() {
         db.collection("diagnoses").getDocuments { snapshot, error in
             if let error = error {
-                print("❌ Error fetching knowledge base: \(error.localizedDescription)")
+                print("Error fetching knowledge base: \(error.localizedDescription)")
                 return
             }
             
             guard let documents = snapshot?.documents else {
-                print("⚠️ No documents found in 'diagnoses' collection")
+                print("No documents found in 'diagnoses' collection")
                 return
             }
             
-            print("🔍 Found \(documents.count) raw documents in Firestore. Attempting to decode...")
+            print("Found \(documents.count) raw documents in Firestore. Attempting to decode...")
             
             self.knowledgeBase = documents.compactMap { doc -> DiagnosisResultData? in
                 do {
                     let data = try doc.data(as: DiagnosisResultData.self)
                     return data
                 } catch {
-                    print("❌ Decoding failed for doc \(doc.documentID): \(error)")
+                    print("Decoding failed for doc \(doc.documentID): \(error)")
                     return nil
                 }
             }
             
-            print("✅ Successfully loaded \(self.knowledgeBase.count) diagnoses from Firestore")
+            print("Successfully loaded \(self.knowledgeBase.count) diagnoses from Firestore")
         }
     }
     
-    // Call this function ONCE to populate your Firestore with the initial data
     func seedDatabase() {
         let initialData = [
             DiagnosisResultData(
@@ -91,9 +90,9 @@ class DiagnoseViewModel: ObservableObject {
         for diagnosis in initialData {
             do {
                 try db.collection("diagnoses").addDocument(from: diagnosis)
-                print("📤 Uploaded \(diagnosis.name) to Firestore")
+                print("Uploaded \(diagnosis.name) to Firestore")
             } catch {
-                print("❌ Error seeding: \(error)")
+                print("Error seeding: \(error)")
             }
         }
     }
@@ -125,13 +124,13 @@ class DiagnoseViewModel: ObservableObject {
     func analyze() {
         isAnalyzing = true
         
-        // Simple matching logic
+        //matching logic
         let userSymptoms = Set(selectedSymptoms)
         
         var bestMatch: DiagnosisResultData? = nil
         var highestScore = -1
         
-        // Use the data loaded from Firestore
+        //use the data loaded from firestore
         for entry in knowledgeBase {
             let entrySymptoms = Set(entry.symptomsMatch)
             let intersection = userSymptoms.intersection(entrySymptoms)
@@ -144,22 +143,22 @@ class DiagnoseViewModel: ObservableObject {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            // Fallback to the first available diagnosis if no perfect match found
+            //fallback to the first found diagnosis if the perfect match cant find
             let result = bestMatch ?? self.knowledgeBase.first
             self.currentResult = result
             self.isAnalyzing = false
             
-            // ✅ Write diagnosis result back to the plant in Firestore
+            //write diagnosis result back to the plant in firestore
             if let diagnosis = result, let plant = self.selectedPlant {
                 self.updatePlantHealth(plant: plant, diagnosis: diagnosis)
             }
             
-            // 🔔 Schedule 7-day follow-up reminder
+            //schedule 7 day follow up reminder
             if let diagnosis = result {
                 let plantName = self.selectedPlant?.name ?? "your plant"
                 NotificationManager.shared.scheduleIntervalNotification(
                     id: "followup-\(diagnosis.name)-\(Date().timeIntervalSince1970)",
-                    title: "Disease Check Reminder 🔍",
+                    title: "Disease Check Reminder",
                     body: "Check your \(plantName) — it has been 7 days since your \(diagnosis.name.lowercased()) diagnosis.",
                     interval: 7 * 24 * 60 * 60 // 7 days in seconds
                 )
@@ -167,14 +166,13 @@ class DiagnoseViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Write Diagnosis Back to Plant
+    //write diagnosis back to plant
     private func updatePlantHealth(plant: PlantModel, diagnosis: DiagnosisResultData) {
         guard let userId = Auth.auth().currentUser?.uid else {
-            print("❌ Cannot update plant health: No user logged in")
+            print("Cannot update plant health: No user logged in")
             return
         }
         
-        // Severity (0.0 mild → 1.0 severe) drives health penalty: up to -45 pts
         let severityPenalty = severity * 45.0
         let newHealthScore  = max(10.0, plant.healthScore - severityPenalty)
         let newStatus       = newHealthScore < 50 ? PlantStatus.critical.rawValue
@@ -191,9 +189,9 @@ class DiagnoseViewModel: ObservableObject {
             "lastDiagnosisDate": Timestamp(date: Date())
         ]) { error in
             if let error = error {
-                print("❌ Failed to update plant health: \(error.localizedDescription)")
+                print("Failed to update plant health: \(error.localizedDescription)")
             } else {
-                print("✅ Plant health updated → \(plant.name): \(diagnosis.name) | score: \(Int(newHealthScore))%")
+                print("Plant health updated → \(plant.name): \(diagnosis.name) | score: \(Int(newHealthScore))%")
             }
         }
     }

@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: - Plant Status
+
 enum PlantStatus: String, Codable, CaseIterable {
     case healthy    = "Healthy"
     case warning    = "Needs Attention"
@@ -8,7 +8,7 @@ enum PlantStatus: String, Codable, CaseIterable {
     case recovering = "Recovering"
 }
 
-// MARK: - Care Log Entry Type
+
 enum TimelineEntryType: String, Codable, CaseIterable {
     case watering    = "Watering"
     case fertilizing = "Fertilizing"
@@ -18,7 +18,7 @@ enum TimelineEntryType: String, Codable, CaseIterable {
     case diagnosis   = "Diagnosis"
 }
 
-// MARK: - Care Log Entry
+
 struct CareLogEntry: Identifiable, Codable {
     let id: UUID
     let type: TimelineEntryType
@@ -50,14 +50,14 @@ struct CareLogEntry: Identifiable, Codable {
     }
 }
 
-// MARK: - Plant Model
+
 struct PlantModel: Identifiable, Codable {
     let id: UUID
     var name: String
     var species: String
     var nickname: String?
     var status: PlantStatus
-    var healthScore: Double   // 0–100
+    var healthScore: Double
     var imageURL: String?
     var location: String
     var dateAdded: Date
@@ -72,8 +72,8 @@ struct PlantModel: Identifiable, Codable {
     var soilType: String
     var ageDays: Int
     var initialNote: String?
-    var lastDiagnosisName: String?   // ✅ Disease name from last diagnosis
-    var lastDiagnosisDate: Date?     // ✅ When the diagnosis was made
+    var lastDiagnosisName: String?
+    var lastDiagnosisDate: Date?
 
     init(
         id: UUID = .init(),
@@ -128,8 +128,6 @@ extension PlantModel {
     var calculatedAge: String {
         let calendar = Calendar.current
         let now = Date()
-        
-        // Use startOfDay to compare full calendar days
         let startOfPlanting = calendar.startOfDay(for: dateAdded)
         let startOfNow = calendar.startOfDay(for: now)
         
@@ -146,7 +144,6 @@ extension PlantModel {
     }
 }
 
-// MARK: - Sample Data
 extension PlantModel {
     static let samples: [PlantModel] = [
         PlantModel(name: "Tomatoes", species: "Solanum lycopersicum", status: .healthy, healthScore: 88, location: "Back garden", streakDays: 7, isOutdoor: true, dailyWater: "450ml", sunlight: "Full sun", soilType: "Loamy", ageDays: 32, initialNote: "Planted in a sunny spot with organic compost."),

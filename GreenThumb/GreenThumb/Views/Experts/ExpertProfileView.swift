@@ -7,7 +7,6 @@ struct ExpertProfileView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header Section
             VStack(spacing: 0) {
                 HStack {
                     Button(action: { router.pop() }) {
@@ -26,7 +25,7 @@ struct ExpertProfileView: View {
                 .padding(.top, 50)
                 
                 VStack(spacing: GTSpacing.md) {
-                    // Profile Image with Verification
+                    //profile image with verification
                     ZStack(alignment: .bottomTrailing) {
                         Circle()
                             .fill(avatarColor)
@@ -59,7 +58,7 @@ struct ExpertProfileView: View {
                 }
                 .padding(.vertical, GTSpacing.lg)
                 
-                // Stats Row
+                //stats row
                 HStack(spacing: 0) {
                     ExpertStatItem(value: String(format: "%.1f", expert.rating), label: "Rating")
                     ExpertStatItem(value: "\(expert.reviewCount)", label: "Reviews")
@@ -72,7 +71,7 @@ struct ExpertProfileView: View {
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: GTSpacing.lg) {
-                    // Actions
+                    //actions
                     HStack(spacing: GTSpacing.md) {
                         Button(action: { router.navigate(to: .bookSession(expert)) }) {
                             HStack(spacing: 8) {
@@ -106,7 +105,7 @@ struct ExpertProfileView: View {
                     
                     Divider()
                     
-                    // Specialization Areas
+                    //specialization areas
                     VStack(alignment: .leading, spacing: GTSpacing.md) {
                         Text("Specialization Areas")
                             .font(GTFont.labelLarge())
@@ -121,7 +120,7 @@ struct ExpertProfileView: View {
                     
                     Divider()
                     
-                    // About Section
+                    //about section
                     VStack(alignment: .leading, spacing: GTSpacing.sm) {
                         Text("About")
                             .font(GTFont.labelLarge())
@@ -134,12 +133,12 @@ struct ExpertProfileView: View {
                     
                     Divider()
                     
-                    // Availability calendar
+                    
                     AvailabilityCalendar()
                     
                     Divider()
                     
-                    // Reviews Section
+                   //reviews section
                     VStack(alignment: .leading, spacing: GTSpacing.lg) {
                         HStack {
                             Text("Reviews – \(expert.reviews.count)")

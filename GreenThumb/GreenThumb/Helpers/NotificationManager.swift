@@ -18,19 +18,20 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         }
     }
     
-    /// Helper to check if notifications are enabled in App Settings
+    
+    //Helper to check if the notification are enabled in app settings
     private var isNotificationsEnabled: Bool {
-        // We use AppStorage/UserDefaults key "pushNotificationsEnabled"
-        // Default to true if not set
+        
+        // Used appstorage/userdefault key - pushNotificationsEnabled
         return UserDefaults.standard.object(forKey: "pushNotificationsEnabled") as? Bool ?? true
     }
     
-    // 🔔 This magic function allows the notification to show even when the app is OPEN!
+    //this function allows to appear notification when the app is already open
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .sound, .badge])
     }
 
-    /// Schedules a notification for a specific date and time (e.g., Watering at 2PM)
+    //Schedules a notification for specific date and time
     func scheduleCalendarNotification(id: String, title: String, body: String, date: Date) {
         guard isNotificationsEnabled else { return }
         let content = UNMutableNotificationContent()
@@ -51,7 +52,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    /// Schedules a notification for a time interval from now (e.g., 7 days later)
+    //Schedules a notification for a specific time interval
     func scheduleIntervalNotification(id: String, title: String, body: String, interval: TimeInterval) {
         guard isNotificationsEnabled else { return }
         let content = UNMutableNotificationContent()
@@ -69,7 +70,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    /// Fires a notification almost immediately (after 1 second) for demo purposes
+    //Function to handle immediate notifications
     func sendImmediateNotification(id: String, title: String, body: String) {
         guard isNotificationsEnabled else { return }
         let content = UNMutableNotificationContent()
@@ -77,7 +78,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         content.body = body
         content.sound = .default
 
-        // 1 second delay
+        //1s delay
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
         let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
 

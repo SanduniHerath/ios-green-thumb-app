@@ -38,7 +38,7 @@ struct GTPostEngagementBar: View {
             Divider()
                 .frame(height: 24)
             
-            // Empty space for layout balance
+            
             Spacer()
                 .frame(maxWidth: .infinity)
         }

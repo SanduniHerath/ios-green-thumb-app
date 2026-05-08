@@ -5,11 +5,11 @@ struct PlantDetailsView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: AppRouter
     @StateObject private var careViewModel = CareGuideViewModel()
-    @State private var selectedTab = 0 // 0: Notes, 1: Timeline
+    @State private var selectedTab = 0 //0-notes, 1-timeline
 
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - Fixed Header
+            
             ZStack(alignment: .bottom) {
                 Color.gtForestGreen.ignoresSafeArea(edges: .top)
                 
@@ -34,18 +34,18 @@ struct PlantDetailsView: View {
             }
             .frame(height: 110)
             
-            // MARK: - Scrollable Area
+           
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Hero Image
+                    //hero image
                     ZStack(alignment: .topLeading) {
                         if let imageURLString = plant.imageURL,
                            let imageURL = URL(string: imageURLString) {
-                            // ✅ Real photo from Cloudinary
+                            //real 4to from cloudinary
                             AsyncImage(url: imageURL) { phase in
                                 switch phase {
                                 case .empty:
-                                    // Loading placeholder
+                                    //loading placeholder
                                     ZStack {
                                         Rectangle().fill(Color.gtPaleGreen.opacity(0.3))
                                         ProgressView()
@@ -59,7 +59,7 @@ struct PlantDetailsView: View {
                                         .aspectRatio(1.5, contentMode: .fit)
                                         .clipped()
                                 case .failure:
-                                    // Fallback on error
+                                    //fallback on error
                                     ZStack {
                                         Rectangle().fill(Color.gtPaleGreen.opacity(0.15))
                                         Text("🪴").font(.system(size: 100))
@@ -70,7 +70,7 @@ struct PlantDetailsView: View {
                                 }
                             }
                         } else {
-                            // No image URL — show emoji placeholder
+                            //no img url - show placeholder image emoji
                             ZStack {
                                 Rectangle().fill(Color.gtPaleGreen.opacity(0.15))
                                 Text(plant.name.contains("Rose") ? "🌹" : "🪴")
@@ -92,7 +92,7 @@ struct PlantDetailsView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 28) {
-                        // Identity
+
                         VStack(alignment: .leading, spacing: 12) {
                             Text(plant.name)
                                 .font(GTFont.displayMedium())
@@ -127,7 +127,7 @@ struct PlantDetailsView: View {
                         }
                         .padding(.top, 24)
 
-                        // Info Grid
+                        //info grid
                         HStack(spacing: 10) {
                             let waterVal = careViewModel.careGuide?.watering.amount ?? plant.dailyWater
                             let sunVal = careViewModel.careGuide?.sunlight.requirement ?? plant.sunlight
@@ -139,7 +139,7 @@ struct PlantDetailsView: View {
                             GTDetailInfoCard(icon: "calendar", value: plant.calculatedAge, label: "Age", iconColor: .purple)
                         }
 
-                        // Action Grid
+                        //action grid
                         HStack(spacing: 0) {
                             GTDetailActionButton(icon: "drop.fill", label: "Water", color: .gtWatering) {
                                 router.navigate(to: .careGuide(plant.species))
@@ -158,7 +158,7 @@ struct PlantDetailsView: View {
                                 .gtShadow(GTShadow.card)
                         )
 
-                        // Tabbed Section
+                       //tabbed section
                         VStack(spacing: 0) {
                             HStack(spacing: 0) {
                                 Button { withAnimation { selectedTab = 0 } } label: {
@@ -200,7 +200,7 @@ struct PlantDetailsView: View {
                                         GTNoteEntry(dotColor: .gtAccentGreen, content: note, timestamp: "Planting Note - \(plant.dateAdded.formatted(date: .abbreviated, time: .omitted))")
                                     }
                                     
-                                    // Map recent care logs to notes if they exist
+                                    //map recent care logs
                                     ForEach(plant.careLogs.prefix(3)) { log in
                                         Divider()
                                         GTNoteEntry(
@@ -219,7 +219,7 @@ struct PlantDetailsView: View {
                                     }
                                 }
                             } else {
-                                // Growth Timeline Integration
+                                //growth timeline integration
                                 Button(action: {
                                     router.navigate(to: .growthTimeline(plant))
                                 }) {
@@ -271,7 +271,7 @@ struct PlantDetailsView: View {
                     }
                     .padding(.horizontal, 24)
                     
-                    // Final Spacer
+                    
                     Spacer(minLength: 150)
                 }
             }

@@ -10,12 +10,12 @@ struct SymptomCheckerView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack(spacing: 0) {
-                // MARK: - Dark Green Header
+                //dark green header
                 ZStack(alignment: .bottom) {
                     Color.gtForestGreen.ignoresSafeArea(edges: .top)
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        // Back and Title
+                        //back and title
                         HStack (spacing: 25){
                             Button {
                                 if let plant = diagnoseVM.selectedPlant {
@@ -44,7 +44,7 @@ struct SymptomCheckerView: View {
                             .foregroundColor(.white.opacity(0.8))
                             .lineLimit(2)
                         
-                        // Selected Plant Selection Menu
+                        //selected plant selection menu
                         Menu {
                             ForEach(plantVM.plants) { plant in
                                 Button {
@@ -83,7 +83,7 @@ struct SymptomCheckerView: View {
                                     .stroke(Color.white.opacity(0.4), lineWidth: 1)
                             )
                         }
-                        // ♿ VoiceOver
+                        //voice over accessibility
                         .accessibilityLabel("Selected plant: \(diagnoseVM.selectedPlant?.name ?? "none selected")")
                         .accessibilityHint("Double-tap to change the plant you are diagnosing")
                         .padding(.bottom, 40)
@@ -92,10 +92,10 @@ struct SymptomCheckerView: View {
                 }
                 .frame(height: 300)
                 
-                // MARK: - Content Area
+                //content area
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 28) {
-                        // Describe Section
+                        //describe section
                         VStack(alignment: .leading, spacing: 16) {
                             HStack(spacing: 10) {
                                 ZStack {
@@ -118,7 +118,7 @@ struct SymptomCheckerView: View {
                             )
                         }
                         
-                        // Symptoms Tag Section
+                        //symptoms tag section
                         VStack(alignment: .leading, spacing: 14) {
                             Text("Select matching symptoms")
                                 .font(GTFont.labelMedium())
@@ -135,14 +135,14 @@ struct SymptomCheckerView: View {
                             }
                         }
                         
-                        // Severity Section
+                        //severity section
                         VStack(alignment: .leading, spacing: 14) {
                             GTSeverityCard(value: $diagnoseVM.severity)
                         }
                         
-                        // Affected Parts Section
+                        //affected part section
                         VStack(alignment: .leading, spacing: 14) {
-                            Text("Select matching symptoms") // As per mockup
+                            Text("Select matching symptoms")
                                 .font(GTFont.labelMedium())
                                 .foregroundColor(.gtTextSecondary)
                             
@@ -157,7 +157,7 @@ struct SymptomCheckerView: View {
                             }
                         }
                         
-                        // Analyse Button
+                        
                         GTButton(
                             title: "Analyse symptoms",
                             style: .primary,
@@ -166,7 +166,7 @@ struct SymptomCheckerView: View {
                                 router.navigate(to: .diagnosisResult)
                             }
                         )
-                        // ♿ VoiceOver
+                        //voice over accessibility type
                         .accessibilityLabel("Analyse symptoms")
                         .accessibilityHint("Double-tap to run a diagnosis on the selected plant based on your chosen symptoms")
                         .padding(.top, 10)
@@ -203,8 +203,7 @@ struct SymptomCheckerView: View {
     }
 }
 
-// MARK: - Subviews
-
+//sub views
 struct SymptomTag: View {
     let title: String
     let isSelected: Bool
@@ -226,9 +225,9 @@ struct SymptomTag: View {
                         )
                 )
         }
-        // ♿ Touch Target: at least 44pt tall
+        //touch taget - accessibility
         .frame(minHeight: 44)
-        // ♿ VoiceOver
+        //voice over accessibility
         .accessibilityLabel("\(title) symptom")
         .accessibilityValue(isSelected ? "Selected" : "Not selected")
         .accessibilityHint("Double-tap to \(isSelected ? "deselect" : "select") this symptom")
@@ -268,7 +267,7 @@ struct GTSeverityCard: View {
             VStack(spacing: 8) {
                 Slider(value: $value, in: 0...1, step: 0.5)
                     .tint(.orange)
-                    // ♿ VoiceOver: reads the current severity level
+                    //voice over accessibility
                     .accessibilityLabel("Severity level")
                     .accessibilityValue(severityLabel)
                     .accessibilityHint("Drag to set how severe the symptoms are")
@@ -280,7 +279,7 @@ struct GTSeverityCard: View {
                     Spacer()
                     Text("Severe").font(GTFont.labelSmall()).foregroundColor(.gtTextMuted)
                 }
-                .accessibilityHidden(true) // Labels are decorative; slider value covers them
+                .accessibilityHidden(true)
             }
         }
         .padding(20)
@@ -309,7 +308,7 @@ struct AffectedPartCard: View {
                 Image(systemName: iconName)
                     .font(.system(size: 24))
                     .foregroundColor(isSelected ? .gtDarkGreen : .gtTextMuted)
-                    .accessibilityHidden(true) // Covered by button label below
+                    .accessibilityHidden(true)
                 
                 Text(part)
                     .font(GTFont.labelSmall())
@@ -326,8 +325,8 @@ struct AffectedPartCard: View {
                     )
             )
         }
-        // ♿ Touch Target: frame is already 80pt tall ✅
-        // ♿ VoiceOver
+        //touch target accessibilty
+        //voice over accessibility
         .accessibilityLabel("\(part) affected area")
         .accessibilityValue(isSelected ? "Selected" : "Not selected")
         .accessibilityHint("Double-tap to \(isSelected ? "deselect" : "select") \(part) as affected")

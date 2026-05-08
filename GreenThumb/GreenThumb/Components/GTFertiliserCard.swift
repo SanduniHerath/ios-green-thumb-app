@@ -8,7 +8,7 @@ struct GTFertiliserCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            // Header Section
+            
             HStack(spacing: 16) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -41,20 +41,20 @@ struct GTFertiliserCard: View {
             Divider()
                 .background(Color.gtBorder.opacity(0.5))
             
-            // Stats Section
+            //stats
             HStack(spacing: 12) {
                 statItem(title: "Base", subtitle: "Application", color: Color.gtBadgeGreenText, bg: Color.gtBadgeGreenBg)
                 statItem(title: frequency, subtitle: "Frequency", color: Color.gtBadgeYellowText, bg: Color.gtBadgeYellowBg)
                 statItem(title: "Soil", subtitle: "Target", color: Color.gtBadgeTealText, bg: Color.gtBadgeTealBg)
             }
             
-            // Instruction
+            
             Text(instructions)
                 .font(GTFont.bodySmall())
                 .foregroundColor(.gtTextSecondary)
                 .lineSpacing(4)
             
-            // Tips Section
+            //tips
             if !tips.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(0..<tips.count, id: \.self) { index in

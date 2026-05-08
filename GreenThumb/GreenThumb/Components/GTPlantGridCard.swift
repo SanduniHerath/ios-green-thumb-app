@@ -6,9 +6,9 @@ struct GTPlantGridCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Image Section
+            //image section
             ZStack(alignment: .topTrailing) {
-                // Background
+                
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(LinearGradient(
@@ -43,13 +43,13 @@ struct GTPlantGridCard: View {
                         Text(emojiForPlant(plant.name))
                             .font(.system(size: 64))
                             .shadow(color: .black.opacity(0.1), radius: 4, y: 2)
-                            .accessibilityHidden(true) // Decorative emoji
+                            .accessibilityHidden(true)
                     }
                 }
                 .frame(height: 140)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 
-                // Percentage Badge
+                
                 Text("\(Int(plant.healthScore))%")
                     .font(GTFont.labelSmall())
                     .foregroundColor(Color.gtTextPrimary)
@@ -63,19 +63,19 @@ struct GTPlantGridCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             
             VStack(alignment: .leading, spacing: 6) {
-                // Name
+                
                 Text(plant.name)
                     .font(GTFont.labelLarge())
                     .foregroundColor(.gtTextPrimary)
                     .lineLimit(1)
                 
-                // Location & Type
+                
                 Text("\(plant.location) \(plant.isOutdoor ? "Outdoor" : "Indoor")")
                     .font(GTFont.bodySmall())
                     .foregroundColor(.gtTextSecondary)
                     .lineLimit(1)
                 
-                // Progress Bar
+                
                 GTHealthBar(
                     value: plant.healthScore / 100,
                     height: 8,
@@ -83,9 +83,9 @@ struct GTPlantGridCard: View {
                 )
                 .padding(.vertical, 4)
                 
-                // Bottom Row
+                
                 HStack {
-                    // Streak
+                   //streak
                     if plant.status == .healthy {
                         HStack(spacing: 3) {
                             Image(systemName: "flame.fill")
@@ -108,7 +108,7 @@ struct GTPlantGridCard: View {
                     
                     Spacer()
                     
-                    // Action Button
+                    
                     actionView
                 }
                 .padding(.top, 4)
@@ -119,7 +119,7 @@ struct GTPlantGridCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .gtShadow(GTShadow.card)
         .onTapGesture { onTap?() }
-        // ♿ VoiceOver: whole card as one combined accessible element
+        //used voice over accessibility type
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(plant.name), \(plant.species). Health: \(Int(plant.healthScore)) percent. Location: \(plant.location), \(plant.isOutdoor ? "outdoor" : "indoor"). Status: \(plant.status == .healthy ? "healthy" : plant.status == .warning ? "needs attention" : "critical").")
         .accessibilityHint("Double-tap to view plant details")
@@ -144,7 +144,7 @@ struct GTPlantGridCard: View {
                     .background(Color(red: 0.8, green: 0.2, blue: 0.2).opacity(0.15))
                     .clipShape(Capsule())
             }
-            .frame(minWidth: 44, minHeight: 44) // ♿ Touch Target
+            .frame(minWidth: 44, minHeight: 44)//used touch target accessibility
             .accessibilityLabel("Diagnose \(plant.name)")
             .accessibilityHint("Double-tap to run a diagnosis on this plant")
         } else if plant.healthScore < 90 {
@@ -157,7 +157,7 @@ struct GTPlantGridCard: View {
                     .background(Color(red: 0.2, green: 0.7, blue: 0.9).opacity(0.15))
                     .clipShape(Capsule())
             }
-            .frame(minWidth: 44, minHeight: 44) // ♿ Touch Target
+            .frame(minWidth: 44, minHeight: 44)//touch target
             .accessibilityLabel("Water \(plant.name) today")
         } else {
             Text("Good")
@@ -167,7 +167,7 @@ struct GTPlantGridCard: View {
                 .padding(.vertical, 6)
                 .background(Color.gtPaleGreen)
                 .clipShape(Capsule())
-                .accessibilityHidden(true) // Purely informational, covered by card label
+                .accessibilityHidden(true) 
         }
     }
     

@@ -14,7 +14,7 @@ struct GTSchedulerTaskRow: View {
     var body: some View {
         Button(action: { onTap?() }) {
             HStack(spacing: 16) {
-                // Checkbox
+                //checkbox
                 ZStack {
                     Circle()
                         .stroke(isDone ? Color.gtDarkGreen : Color.gtAccentGreen.opacity(0.3), lineWidth: 1.5)
@@ -30,7 +30,7 @@ struct GTSchedulerTaskRow: View {
                     }
                 }
                 
-                // Icon
+                
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(iconBgColor)
@@ -40,7 +40,7 @@ struct GTSchedulerTaskRow: View {
                         .font(.system(size: 18))
                 }
                 
-                // Details
+                
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(GTFont.labelLarge())
@@ -55,7 +55,7 @@ struct GTSchedulerTaskRow: View {
                 
                 Spacer()
                 
-                // Metadata
+                
                 VStack(alignment: .trailing, spacing: 2) {
                     if isDone {
                         Text("Done")

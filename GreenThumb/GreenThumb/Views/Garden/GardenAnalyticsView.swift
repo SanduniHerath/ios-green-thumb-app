@@ -6,7 +6,7 @@ struct GardenAnalyticsView: View {
     @EnvironmentObject var schedulerVM: SchedulerViewModel
     @State private var selectedPeriod = 0
 
-    // ── Computed stats from real data ──────────────────────────────
+    //stats for real data
     private var wateringSessions: Int {
         schedulerVM.tasks.filter { $0.taskType == .water && $0.isCompleted }.count
     }
@@ -24,14 +24,14 @@ struct GardenAnalyticsView: View {
         return plantVM.plants.map { $0.healthScore }.reduce(0, +) / Double(plantVM.plants.count)
     }
 
-    // Static streak pattern (historical daily data not yet tracked in Firestore)
+    //static streak pattern
     let streakDays = [false, true, true, false, true, false, true, true, false, true, true, true, true, true]
 
     var body: some View {
         VStack(spacing: 0) {
-            // ── Header ─────────────────────────────────────────────
+            //header
             HStack {
-                // ♿ Touch Target: circle is 38pt, expand to 44pt minimum
+               //touch tagert accessibility
                 Button { router.pop() } label: {
                     ZStack {
                         Circle().fill(Color.white).frame(width: 38, height: 38).gtShadow(GTShadow.card)
@@ -60,11 +60,11 @@ struct GardenAnalyticsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: GTSpacing.lg) {
 
-                    // Period Toggle
+                    //period toggle
                     GTSegmentedControl(options: ["Week", "Month"], selectedIndex: $selectedPeriod)
                         .padding(.top, GTSpacing.sm)
 
-                    // ── Dynamic 3-column stat cards ─────────────────
+                    //dynamic 3 column stat cards
                     HStack(spacing: GTSpacing.sm) {
                         SmallStatCard(
                             value: "\(wateringSessions)",
@@ -83,7 +83,7 @@ struct GardenAnalyticsView: View {
                         )
                     }
 
-                    // ── Average Garden Health ───────────────────────
+                    //average garden health
                     if !plantVM.plants.isEmpty {
                         VStack(alignment: .leading, spacing: GTSpacing.sm) {
                             Text("Overall garden health")
@@ -91,7 +91,7 @@ struct GardenAnalyticsView: View {
                                 .foregroundColor(.gtTextPrimary)
 
                             HStack(spacing: GTSpacing.md) {
-                                // Big health score circle
+                                //big health score circle
                                 ZStack {
                                     Circle()
                                         .stroke(healthColor(for: averageHealth).opacity(0.15), lineWidth: 10)
@@ -111,7 +111,7 @@ struct GardenAnalyticsView: View {
                                     Text("\(plantVM.plants.count) plants in your garden")
                                         .font(GTFont.bodyMedium())
                                         .foregroundColor(.gtTextSecondary)
-                                    Text(averageHealth >= 85 ? "🌿 Garden is thriving!" : averageHealth >= 65 ? "⚠️ Some plants need care" : "🚨 Urgent attention needed")
+                                    Text(averageHealth >= 85 ? "Garden is thriving!" : averageHealth >= 65 ? "Some plants need care" : "Urgent attention needed")
                                         .font(GTFont.labelMedium())
                                         .foregroundColor(healthColor(for: averageHealth))
                                 }
@@ -127,11 +127,11 @@ struct GardenAnalyticsView: View {
                         }
                     }
 
-                    // ♿ VoiceOver: each streak day dot reads its status
+                    //used voice over
                     GTStreakGrid(days: streakDays)
                         .accessibilityElement(children: .contain)
 
-                    // ── Disease History (Dynamic) ───────────────────
+                    //disease history
                     VStack(alignment: .leading, spacing: GTSpacing.sm) {
                         Text("Disease history")
                             .font(GTFont.labelLarge())
@@ -162,7 +162,7 @@ struct GardenAnalyticsView: View {
                         }
                     }
 
-                    // ── Per-Plant Health Breakdown ──────────────────
+                    //per plant health breakdown
                     if !plantVM.plants.isEmpty {
                         VStack(alignment: .leading, spacing: GTSpacing.sm) {
                             Text("Plant health breakdown")
@@ -206,8 +206,7 @@ struct GardenAnalyticsView: View {
         return .gtAccentGreen
     }
 }
-
-// MARK: - SmallStatCard
+//small stat card
 private struct SmallStatCard: View {
     let value: String
     let label: String

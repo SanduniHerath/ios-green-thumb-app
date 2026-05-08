@@ -7,8 +7,8 @@ import FirebaseAuth
 class ExpertViewModel: ObservableObject {
     @Published var experts: [ExpertModel] = []
     @Published var selectedExpert: ExpertModel? = nil
-    @Published var chatMessages: [ChatMessage] = [] // For live chat
-    @Published var messages: [ChatMessage] = [] // Legacy/General
+    @Published var chatMessages: [ChatMessage] = []
+    @Published var messages: [ChatMessage] = []
     @Published var messageInput: String = ""
     @Published var searchText: String = ""
     @Published var selectedFilter: String = "All"
@@ -23,8 +23,6 @@ class ExpertViewModel: ObservableObject {
         // seedExperts()
     }
 
-    // ... (filteredExperts and fetchExperts remain)
-
     func startChat(with expert: ExpertModel) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         let chatId = getChatId(userId: userId, expertId: expert.id.uuidString)
@@ -36,13 +34,13 @@ class ExpertViewModel: ObservableObject {
             .order(by: "timestamp", descending: false)
             .addSnapshotListener { snapshot, error in
                 if let error = error {
-                    print("❌ Error listening to chat: \(error.localizedDescription)")
+                    print("Error listening to chat: \(error.localizedDescription)")
                     return
                 }
                 
                 guard let documents = snapshot?.documents else { return }
                 self.chatMessages = documents.compactMap { try? $0.data(as: ChatMessage.self) }
-                print("✅ Received \(self.chatMessages.count) messages for chat \(chatId)")
+                print("Received \(self.chatMessages.count) messages for chat \(chatId)")
             }
     }
 
@@ -55,13 +53,13 @@ class ExpertViewModel: ObservableObject {
         do {
             try db.collection("chats").document(chatId).collection("messages").addDocument(from: message)
             
-            // Mock expert reply after 1.5 seconds
+            //mock expert reply after 1.5 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 let reply = ChatMessage(senderId: expert.id.uuidString, content: "I've received your message. I'll get back to you shortly!", isFromUser: false)
                 try? self.db.collection("chats").document(chatId).collection("messages").addDocument(from: reply)
             }
         } catch {
-            print("❌ Error sending message: \(error.localizedDescription)")
+            print("Error sending message: \(error.localizedDescription)")
         }
     }
 
@@ -82,7 +80,7 @@ class ExpertViewModel: ObservableObject {
         expertListener?.remove()
         expertListener = db.collection("experts").addSnapshotListener { snapshot, error in
             if let error = error {
-                print("❌ Error fetching experts: \(error.localizedDescription)")
+                print("Error fetching experts: \(error.localizedDescription)")
                 return
             }
             guard let documents = snapshot?.documents else { return }
@@ -104,17 +102,17 @@ class ExpertViewModel: ObservableObject {
             try db.collection("bookings").document(booking.id).setData(from: booking)
             self.bookingSuccess = true
             
-            // 🔔 1. Immediate confirmation for demo
+           //immediate confirmation push notification appear
             NotificationManager.shared.sendImmediateNotification(
                 id: "confirm-\(booking.id)",
                 title: "Session Confirmed! ✅",
                 body: "You have successfully booked a session with \(expert.name)."
             )
             
-            // 🔔 2. Schedule reminder 30 minutes before
+           //schedule session remider set 30 minutes before
             scheduleExpertReminder(expertName: expert.name, date: date, timeSlot: timeSlot, bookingId: booking.id)
             
-            // 🗓️ 3. Add to official Apple Calendar App
+            //Add the session to official Apple claendar
             if let finalDate = getExactSessionDate(date: date, timeSlot: timeSlot) {
                 CalendarManager.shared.addEventToCalendar(
                     title: "Green Thumb Session: \(expert.name)",
@@ -122,16 +120,16 @@ class ExpertViewModel: ObservableObject {
                     startDate: finalDate
                 )
                 
-                // ✅ 4. Also add to official iOS Reminders App
+                //Add the session to official apple reminders
                 CalendarManager.shared.addReminderToSystem(
                     title: "Expert Session: \(expert.name) @ \(timeSlot)",
                     dueDate: finalDate
                 )
             }
             
-            print("✅ Session booked successfully!")
+            print("Session booked successfully!")
         } catch {
-            print("❌ Error booking session: \(error.localizedDescription)")
+            print("Error booking session: \(error.localizedDescription)")
         }
     }
 
@@ -152,10 +150,10 @@ class ExpertViewModel: ObservableObject {
 
     private func scheduleExpertReminder(expertName: String, date: Date, timeSlot: String, bookingId: String) {
         if let finalDate = getExactSessionDate(date: date, timeSlot: timeSlot) {
-            // 30 minutes before
+            //30 min before
             let reminderDate = finalDate.addingTimeInterval(-30 * 60)
             
-            // Only schedule if it's in the future
+            //only schedule if its in the future
             if reminderDate > Date() {
                 NotificationManager.shared.scheduleCalendarNotification(
                     id: "expert-\(bookingId)",
@@ -171,9 +169,9 @@ class ExpertViewModel: ObservableObject {
         for expert in ExpertModel.samples {
             do {
                 try db.collection("experts").document(expert.id.uuidString).setData(from: expert)
-                print("📤 Uploaded expert: \(expert.name)")
+                print("Uploaded expert: \(expert.name)")
             } catch {
-                print("❌ Error seeding expert: \(error)")
+                print("Error seeding expert: \(error)")
             }
         }
     }

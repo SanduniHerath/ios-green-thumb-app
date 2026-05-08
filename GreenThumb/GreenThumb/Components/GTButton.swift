@@ -1,12 +1,12 @@
 import SwiftUI
 
-// MARK: - Button Style Variants
+//button style variant
 enum GTButtonStyle { case primary, secondary, outline, ghost, social, expert }
 enum GTButtonSize  { case large, medium, small }
 
 struct GTButton: View {
     let title: String
-    var icon: String?           // SF Symbol name
+    var icon: String?           
     var trailingIcon: String?
     var style: GTButtonStyle  = .primary
     var size: GTButtonSize    = .large

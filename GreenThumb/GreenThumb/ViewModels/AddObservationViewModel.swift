@@ -2,7 +2,7 @@ import SwiftUI
 import Combine
 
 class AddObservationViewModel: ObservableObject {
-    // Form data
+    //form data
     @Published var selectedPlant: String
     @Published var species: String
     @Published var location: String
@@ -10,7 +10,7 @@ class AddObservationViewModel: ObservableObject {
     @Published var tags: [String]
     @Published var observationNote: String = ""
     
-    // Navigation
+    //navigation
     var onSave: ((PlantModel) -> Void)?
     var onCancel: (() -> Void)?
     
@@ -25,7 +25,6 @@ class AddObservationViewModel: ObservableObject {
         self.tags = plant?.tags ?? ["Flowering", "Outdoor", "Fragrant"]
     }
     
-    // Options
     let plantOptions = ["Rose Bush", "Tomatoes", "Monstera", "Boston Fern"]
     let locationOptions = ["Front garden", "Back garden", "Living room", "Balcony"]
     let typeOptions = ["Pot", "Ground", "Hydroponic"]
@@ -49,7 +48,6 @@ class AddObservationViewModel: ObservableObject {
 
     
     func addTag() {
-        // Logic to show a tag picker or add a custom tag
         if let newTag = availableTags.first(where: { !tags.contains($0) }) {
             tags.append(newTag)
         }

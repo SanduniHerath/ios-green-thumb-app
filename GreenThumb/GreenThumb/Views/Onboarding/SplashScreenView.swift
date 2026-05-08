@@ -9,16 +9,16 @@ struct SplashScreenView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             ZStack {
-                // Full background
+                //background
                 Color.gtForestGreen
                     .ignoresSafeArea()
 
                 VStack(spacing: 0) {
                     Spacer()
 
-                    // Logo block
+                    
                     VStack(spacing: GTSpacing.md) {
-                        // Logo icon with subtle border (as seen in design)
+                        //logo icon
                         ZStack {
                             RoundedRectangle(cornerRadius: GTRadius.md)
                                 .stroke(Color.gtAccentGreen.opacity(0.6), lineWidth: 2)
@@ -31,13 +31,13 @@ struct SplashScreenView: View {
                             )
                         }
 
-                        // App name
+                        //app name
                         Text("GreenThumb")
                             .font(.custom("Georgia", size: 38))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
 
-                        // Tagline
+                       //tagline
                         Text("GROW WITH CONFIDENCE")
                             .font(.system(size: 13, weight: .semibold, design: .rounded))
                             .tracking(2.5)
@@ -48,7 +48,7 @@ struct SplashScreenView: View {
 
                     Spacer()
 
-                    // Animated loading dots
+                    
                     GTLoadingDots()
                         .opacity(opacity)
                         .padding(.bottom, GTSpacing.xxl)
@@ -72,7 +72,7 @@ struct SplashScreenView: View {
                 opacity = 1
                 scale   = 1
             }
-            // Auto-advance after 2.5 s
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 navigateNext = true
             }

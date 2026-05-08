@@ -17,13 +17,12 @@ struct GTCard: View {
     }
 }
 
-// A plant card used in lists
+// this is the plant card used in the plant list
 struct GTPlantCard: View {
     let plant: PlantModel
 
     var body: some View {
         HStack(spacing: GTSpacing.md) {
-            // Plant avatar placeholder
             ZStack {
                 RoundedRectangle(cornerRadius: GTRadius.md)
                     .fill(Color.gtPaleGreen)

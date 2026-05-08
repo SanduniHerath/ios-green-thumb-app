@@ -7,7 +7,6 @@ import LocalAuthentication
 @MainActor
 class AuthViewModel: ObservableObject {
     
-    // MARK: - Published States
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @Published var isAuthenticated: Bool = false
@@ -16,7 +15,6 @@ class AuthViewModel: ObservableObject {
     
     private let db = Firestore.firestore()
     
-    // MARK: - Init
     init() {
         isAuthenticated = Auth.auth().currentUser != nil
         checkBiometricAvailability()
@@ -30,7 +28,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Email Sign In
+    
     func signIn(email: String, password: String) {
         guard !email.isEmpty && !password.isEmpty else {
             errorMessage = "Please enter both email and password"
@@ -47,14 +45,14 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            // 💾 Save to Keychain for future Face ID use
+            //save to keychain for future face id login
             self.saveCredentials(email: email, password: password)
-            self.selectedTab = 0 // 🏠 Reset to Home tab
+            self.selectedTab = 0
             self.isAuthenticated = true
         }
     }
     
-    // MARK: - Email Registration
+    
     func register(email: String, password: String, name: String) {
         guard !email.isEmpty && !password.isEmpty && !name.isEmpty else {
             errorMessage = "Please fill in all fields"
@@ -76,7 +74,7 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            // 💾 Save to Keychain for future Face ID use
+            //save to keychain for future face id use
             self.saveCredentials(email: email, password: password)
             
             self.createUserDocument(uid: user.uid, email: email, name: name)
@@ -86,7 +84,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Keychain Helpers
+    //keychain helpers
     private func saveCredentials(email: String, password: String) {
         if let emailData = email.data(using: .utf8),
            let passwordData = password.data(using: .utf8) {
@@ -105,7 +103,7 @@ class AuthViewModel: ObservableObject {
         return nil
     }
     
-    // MARK: - Firestore User Creation
+    //firestore user document creation
     private func createUserDocument(uid: String, email: String, name: String) {
         let data: [String: Any] = [
             "uid": uid,
@@ -124,9 +122,9 @@ class AuthViewModel: ObservableObject {
         db.collection("users").document(uid).setData(data, merge: true)
     }
     
-    // MARK: - Face ID logic
+    //face id logic implementation
     func signInWithFaceID() {
-        // 🛡️ Check if enabled in App Settings
+       //in here check whether the face id option is enabled in the app settings
         let isFaceIDEnabled = UserDefaults.standard.object(forKey: "faceIDEnabled") as? Bool ?? true
         guard isFaceIDEnabled else {
             self.errorMessage = "Face ID is disabled in settings. Please enable it to use biometric login."
@@ -142,25 +140,25 @@ class AuthViewModel: ObservableObject {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 Task { @MainActor in
                     if success {
-                        // 1. Scan successful!
+                        //face scan successful
                         if let user = Auth.auth().currentUser {
-                            // Already have a session
-                            self.selectedTab = 0 // 🏠 Reset to Home tab
+                            //already have a session
+                            self.selectedTab = 0 //reset to home tab
                             self.isAuthenticated = true
                         } else if let (email, password) = self.getCredentials() {
-                            // 2. No session, but we have saved credentials in the Vault!
+                            //no session but have info in the keychain
                             self.isLoading = true
                             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                                 self.isLoading = false
                                 if let error = error {
                                     self.errorMessage = "Automatic login failed: \(error.localizedDescription)"
                                 } else {
-                                    self.selectedTab = 0 // 🏠 Reset to Home tab
+                                    self.selectedTab = 0
                                     self.isAuthenticated = true
                                 }
                             }
                         } else {
-                            // 3. No session and no saved credentials
+                            //no session and no saved credentials
                             self.errorMessage = "No saved account found. Please sign in manually once to enable Face ID."
                         }
                     } else {
@@ -178,11 +176,11 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Sign Out
+   
     func signOut() {
         do {
             try Auth.auth().signOut()
-            self.selectedTab = 0 // 🏠 Reset to Home for next login
+            self.selectedTab = 0
             isAuthenticated = false
             errorMessage = nil
         } catch {

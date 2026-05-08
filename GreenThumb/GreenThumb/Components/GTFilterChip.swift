@@ -63,7 +63,7 @@ struct GTSymptomTag: View {
     }
 }
 
-// Flexible wrapping tag layout
+
 struct FlexibleTagLayout: View {
     let tags: [String]
     @Binding var selected: Set<String>

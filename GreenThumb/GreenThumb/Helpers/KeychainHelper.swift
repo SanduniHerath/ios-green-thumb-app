@@ -13,11 +13,11 @@ class KeychainHelper {
             kSecAttrAccount: account
         ] as CFDictionary
 
-        // Add item to keychain
+        //add item to keychain
         let status = SecItemAdd(query, nil)
 
         if status == errSecDuplicateItem {
-            // Item already exists, so update it
+            //if the item already exists, update it
             let query = [
                 kSecAttrService: service,
                 kSecAttrAccount: account,

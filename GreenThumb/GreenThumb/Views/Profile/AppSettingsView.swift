@@ -12,9 +12,9 @@ struct AppSettingsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header Section
+            
             VStack(alignment: .leading, spacing: GTSpacing.md) {
-                // Top Navigation
+                
                 HStack {
                     Button { dismiss() } label: {
                         Image(systemName: "arrow.left")
@@ -25,7 +25,7 @@ struct AppSettingsView: View {
                 .padding(.horizontal, GTSpacing.lg)
                 .padding(.top, 54)
                 
-                // Title
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Settings")
                         .font(GTFont.displayLarge())
@@ -37,7 +37,7 @@ struct AppSettingsView: View {
                 }
                 .padding(.horizontal, GTSpacing.lg)
                 
-                // Profile Dashboard Card
+                //profile dashboard card
                 HStack(spacing: GTSpacing.md) {
                     ZStack {
                         Circle()
@@ -72,10 +72,10 @@ struct AppSettingsView: View {
             }
             .background(Color.gtForestGreen)
             
-            // Scrollable Content
+            
             ScrollView(showsIndicators: false) {
                 VStack(spacing: GTSpacing.lg) {
-                    // Notifications
+                    //notifications
                     GTSettingCard(title: "Notifications") {
                         GTSettingRow(
                             icon: "bell.fill",
@@ -95,7 +95,7 @@ struct AppSettingsView: View {
                     }
                     .padding(.top, GTSpacing.lg)
                     
-                    // Security
+                    //security
                     GTSettingCard(title: "Security") {
                         GTSettingRow(
                             icon: "lock.fill",
@@ -106,7 +106,7 @@ struct AppSettingsView: View {
                         )
                     }
                     
-                    // Advanced
+                    //advanced
                     GTSettingCard(title: "Advanced features") {
                         GTSettingRow(
                             icon: "calendar",
@@ -126,7 +126,7 @@ struct AppSettingsView: View {
                         )
                     }
                     
-                    // Danger Zone
+                    
                     GTSettingCard {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("DANGER ZONE")
@@ -148,7 +148,7 @@ struct AppSettingsView: View {
                         .padding(.vertical, GTSpacing.sm)
                     }
                     
-                    // Footer
+                    //footer
                     VStack(spacing: 4) {
                         Text("GreenThumb")
                             .font(GTFont.labelMedium())

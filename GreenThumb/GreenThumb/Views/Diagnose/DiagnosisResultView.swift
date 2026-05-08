@@ -9,14 +9,13 @@ struct DiagnosisResultView: View {
         VStack(spacing: 0) {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // MARK: - Pink Header Section
+                    //pink header section
                     ZStack(alignment: .topLeading) {
                         Color.gtDiagnosisPink
                             .frame(height: 320)
                             .ignoresSafeArea(edges: .top)
                         
                         VStack(alignment: .leading, spacing: 20) {
-                            // Back Button
                             Button {
                                 router.selectedTab = 2
                             } label: {
@@ -44,10 +43,10 @@ struct DiagnosisResultView: View {
                         .padding(.horizontal, 24)
                     }
                     
-                    // MARK: - Overlapping Plant Card
+                    //overlapping plant card
                     VStack(spacing: 0) {
                         HStack(spacing: 16) {
-                            // Plant Icon
+                            //plant icon
                             ZStack {
                                 RoundedRectangle(cornerRadius: 12)
                                     .fill(Color(hex: "F9D5D5"))
@@ -83,7 +82,7 @@ struct DiagnosisResultView: View {
                     .padding(.horizontal, 24)
                     .padding(.top, -60)
                     
-                    // MARK: - Treatment Plan Section
+                   //treatment plan section
                     VStack(alignment: .leading, spacing: 24) {
                         Text("Treatment plan")
                             .font(GTFont.labelLarge())
@@ -110,7 +109,7 @@ struct DiagnosisResultView: View {
                         }
 
                         
-                        // Action Buttons
+                        //action buttons
                         VStack(spacing: 12) {
                             GTButton(
                                 title: "View full care guide",
@@ -141,8 +140,6 @@ struct DiagnosisResultView: View {
             }
             .ignoresSafeArea(edges: .top)
             
-            // Tab Bar
-            //GTTabBar(selectedTab: $selectedTab)
         }
         .navigationBarHidden(true)
         .background(Color.gtTreatmentBg.ignoresSafeArea())
