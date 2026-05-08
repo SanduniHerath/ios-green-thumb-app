@@ -75,7 +75,7 @@ GreenThumb leverages the full power of the iOS ecosystem to provide a seamless a
 
 ## 📖 Documentation
 
-For a detailed technical breakdown of the architecture, data layer, and advanced system integrations, please refer to the [Full Code Documentation](CODE_DOCUMENTATION.md).
+For a detailed technical breakdown of the architecture, data layer, and advanced system integrations, please refer to the [Full Code Documentation](Code_documentation.md).
 
 
 
