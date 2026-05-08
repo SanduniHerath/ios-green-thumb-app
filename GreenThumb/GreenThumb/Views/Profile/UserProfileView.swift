@@ -11,9 +11,9 @@ struct UserProfileView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Header Section (Static)
+               
                 VStack(alignment: .leading, spacing: GTSpacing.md) {
-                    // Top Navigation
+                   //navigation
                     HStack {
                         Button { router.selectedTab = 0 } label: {
                             Image(systemName: "arrow.left")
@@ -30,7 +30,7 @@ struct UserProfileView: View {
                     .padding(.horizontal, GTSpacing.lg)
                     .padding(.top, 54)
 
-                    // Dynamic Title
+                   //dynamic title
                     VStack(alignment: .leading, spacing: 4) {
                         Text(selectedTab == 0 ? "User Profile" : "Community\nFeed")
                             .font(GTFont.displayLarge())
@@ -41,7 +41,7 @@ struct UserProfileView: View {
                     .padding(.bottom, selectedTab == 0 ? 0 : 20)
 
                     if selectedTab == 0 {
-                        // Profile Info
+                        //profile info
                         VStack(spacing: GTSpacing.sm) {
                             GTAvatar(name: profileVM.profile.name, size: 100)
                             
@@ -59,7 +59,7 @@ struct UserProfileView: View {
                         }
                         .padding(.horizontal, 80)
                         
-                        // Stats Row
+                        //stats row
                         HStack {
                             GTStatItem(value: "\(profileVM.profile.plantCount)", label: "Plants tracked")
                             GTStatItem(value: "\(profileVM.profile.streakDays)", label: "Day streak")
@@ -73,15 +73,15 @@ struct UserProfileView: View {
                 .padding(.bottom, GTSpacing.lg)
                 .background(Color.gtForestGreen)
                 
-                // Scrollable Content
+                
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
-                        // Tab Switcher
+                        //tab switcher
                         GTSegmentedControl(options: ["My profile", "Community"], selectedIndex: $selectedTab)
                             .padding(.horizontal, GTSpacing.xxl)
                             .padding(.vertical, GTSpacing.lg)
                         
-                        // Content Body
+                        //content body
                         VStack(spacing: GTSpacing.lg) {
                             if selectedTab == 0 {
                                 myProfileContent
@@ -95,7 +95,7 @@ struct UserProfileView: View {
                 }
                 .background(Color.gtBackground)
             }
-            .background(Color.gtForestGreen) // Preserve top color for safe area
+            .background(Color.gtForestGreen)
             .ignoresSafeArea(edges: .top)
             .navigationDestination(isPresented: $showSettings) { AppSettingsView() }
         }
@@ -103,10 +103,10 @@ struct UserProfileView: View {
     
     private var myProfileContent: some View {
         VStack(spacing: GTSpacing.lg) {
-            // Streak Alert
+            //sterak alert card
             GTStreakAlertCard(streak: profileVM.profile.streakDays, best: profileVM.profile.streakDays + 5)
             
-            // My Plants Section
+            //my plant section
             VStack(alignment: .leading, spacing: GTSpacing.md) {
                 Text("My plants")
                     .font(GTFont.labelLarge())
@@ -126,7 +126,7 @@ struct UserProfileView: View {
                                 } label: {
                                     GTPlantCompactCard(
                                         name: plant.name,
-                                        health: Int.random(in: 70...95), // Mock health for now
+                                        health: Int.random(in: 70...95),
                                         icon: "🪴",
                                         imageURL: plant.imageURL,
                                         borderColor: .gtDarkGreen
@@ -139,7 +139,7 @@ struct UserProfileView: View {
                 }
             }
             
-            // Recent sessions Section
+            //recent session section
             VStack(alignment: .leading, spacing: GTSpacing.md) {
                 Text("Recent expert sessions")
                     .font(GTFont.labelLarge())
@@ -170,7 +170,7 @@ struct UserProfileView: View {
                 }
             }
             
-            // Sign Out
+            //sign out
             Button { authVM.signOut() } label: {
                 HStack {
                     Image(systemName: "arrow.right.to.line")
@@ -193,7 +193,7 @@ struct UserProfileView: View {
     
     private var communityContent: some View {
         VStack(spacing: GTSpacing.lg) {
-            // Category Chips
+            //category chips
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: GTSpacing.sm) {
                     ForEach(["All", "Disease tips", "Soil"], id: \.self) { category in
@@ -215,7 +215,7 @@ struct UserProfileView: View {
             }
             .padding(.top, GTSpacing.xs)
             
-            // Feed
+            //feed
             VStack(spacing: GTSpacing.lg) {
                 ForEach(communityVM.filteredPosts) { post in
                     GTCommunityPostCard(post: post)
@@ -236,7 +236,6 @@ extension View {
     }
 }
 
-// MARK: - AppSettingView has been moved to its own file AppSettingsView.swift
 
 #Preview { UserProfileView()
     .environmentObject(ProfileViewModel()).environmentObject(AuthViewModel()).environmentObject(AppRouter())

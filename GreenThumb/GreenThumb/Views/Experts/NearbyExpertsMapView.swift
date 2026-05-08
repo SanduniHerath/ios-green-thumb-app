@@ -8,12 +8,13 @@ struct NearbyExpertsMapView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
 
-            // MARK: - Full Screen Map (iOS 17 native API)
+        
+            //full screen map - iOS 17 native API
             Map(position: $mapVM.cameraPosition) {
-                // Show user's blue dot
+                //show user's blue dot
                 UserAnnotation()
 
-                // Office pins — only nearby ones
+                //show only nearby offices pins
                 ForEach(mapVM.nearbyOffices) { office in
                     Annotation(office.name, coordinate: office.coordinate, anchor: .bottom) {
                         OfficePinView(
@@ -28,7 +29,7 @@ struct NearbyExpertsMapView: View {
                     }
                 }
 
-                // Route polyline
+                //route polyline
                 if let route = mapVM.route {
                     MapPolyline(route.polyline)
                         .stroke(.blue.opacity(0.85), style: StrokeStyle(
@@ -46,7 +47,7 @@ struct NearbyExpertsMapView: View {
             .mapStyle(.standard(emphasis: .automatic))
             .ignoresSafeArea()
 
-            // MARK: - Floating Header
+            //floating header
             VStack {
                 HStack {
                     Button(action: { router.pop() }) {
@@ -90,7 +91,7 @@ struct NearbyExpertsMapView: View {
                 Spacer()
             }
 
-            // MARK: - Office Detail Card
+           //office detail card
             if mapVM.showDetailCard, let office = mapVM.selectedOffice {
                 OfficeDetailCard(
                     office: office,
@@ -107,7 +108,7 @@ struct NearbyExpertsMapView: View {
     }
 }
 
-// MARK: - Custom Pin View
+//custom pins
 struct OfficePinView: View {
     let isSelected: Bool
     let isOpen: Bool
@@ -131,7 +132,7 @@ struct OfficePinView: View {
     }
 }
 
-// MARK: - Office Detail Card
+//office detail card
 struct OfficeDetailCard: View {
     let office: AgriculturalOffice
     let distance: String?
@@ -140,14 +141,14 @@ struct OfficeDetailCard: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Drag Handle
+            
             Capsule()
                 .fill(Color.gtSeparator)
                 .frame(width: 40, height: 4)
                 .padding(.top, GTSpacing.md)
 
             VStack(alignment: .leading, spacing: GTSpacing.md) {
-                // Header
+                
                 HStack(alignment: .top, spacing: GTSpacing.md) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
@@ -183,7 +184,7 @@ struct OfficeDetailCard: View {
 
                 Divider()
 
-                // Info rows
+               
                 VStack(spacing: GTSpacing.sm) {
                     OfficeDetailRow(icon: "clock.fill", color: .gtAccentGreen, label: "Hours", value: office.openingHours)
                     OfficeDetailRow(icon: "phone.fill", color: .gtForestGreen, label: "Phone", value: office.phone, isPhone: true)
@@ -192,7 +193,7 @@ struct OfficeDetailCard: View {
                     }
                 }
 
-                // Buttons
+                //buttons
                 HStack(spacing: GTSpacing.md) {
                     Button(action: onGetDirections) {
                         HStack(spacing: 8) {
@@ -229,7 +230,7 @@ struct OfficeDetailCard: View {
     }
 }
 
-// MARK: - Detail Row
+
 struct OfficeDetailRow: View {
     let icon: String
     let color: Color

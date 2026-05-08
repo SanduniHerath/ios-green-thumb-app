@@ -1,6 +1,5 @@
 import SwiftUI
 
-// MARK: - Add Observation Button
 struct GTAddObservationButton: View {
     var action: () -> Void
 
@@ -38,12 +37,10 @@ struct GTAddObservationButton: View {
     }
 }
 
-// MARK: - Timeline Entry View
 struct GTHighFidelityTimelineCard: View {
     let entry: CareLogEntry
     let isLast: Bool
     
-    // Determine color based on hex or type
     private var accentColor: Color {
         if let hex = entry.colorHex {
             return Color(hex: hex)
@@ -53,28 +50,28 @@ struct GTHighFidelityTimelineCard: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            // Left Column: Dot and Connector
+           
             VStack(spacing: 0) {
-                // The Dot
+                
                 Circle()
                     .fill(accentColor)
                     .frame(width: 16, height: 16)
                     .gtShadow(GTShadow.card)
                 
-                // The Line
+                
                 if !isLast {
                     Rectangle()
-                        .fill(Color(hex: "A8CC80")) // Light green connector as per mockup
+                        .fill(Color(hex: "A8CC80"))
                         .frame(width: 4)
                         .frame(maxHeight: .infinity)
                 }
             }
             .frame(width: 40)
-            .padding(.top, 32) // Align dot with center of the card's top header
+            .padding(.top, 32)
             
-            // Right Column: Card Content
+            
             VStack(alignment: .leading, spacing: 14) {
-                // Header (Icon + Date/Time)
+                
                 HStack(spacing: 8) {
                     Image(systemName: "calendar")
                         .font(.system(size: 16))
@@ -85,19 +82,19 @@ struct GTHighFidelityTimelineCard: View {
                         .foregroundColor(.gtTextSecondary)
                 }
                 
-                // Title
+                
                 Text(entry.title)
                     .font(GTFont.labelLarge())
                     .foregroundColor(.gtTextPrimary)
                 
-                // Note
+               
                 Text(entry.note)
                     .font(GTFont.bodySmall())
                     .foregroundColor(.gtTextSecondary)
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                // Status Badge
+                
                 if let badge = entry.statusBadge {
                     Text(badge)
                         .font(GTFont.labelSmall())

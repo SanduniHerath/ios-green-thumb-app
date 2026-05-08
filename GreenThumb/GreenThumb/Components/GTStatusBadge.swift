@@ -1,6 +1,6 @@
 import SwiftUI
 
-// GTStatusBadge — pill-shaped label for plant health / features
+//for plant health or features
 struct GTStatusBadge: View {
     let text: String
     var backgroundColor: Color = .gtPaleGreen
@@ -21,7 +21,7 @@ struct GTStatusBadge: View {
     }
 }
 
-// Convenience preset for feature counter chips (e.g. "FEATURE 01 OF 02")
+
 extension GTStatusBadge {
     static func feature(_ text: String) -> GTStatusBadge {
         GTStatusBadge(

@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - Community Feed
+
 struct CommunityFeedView: View {
     @EnvironmentObject var communityVM: CommunityViewModel
     @State private var showNewPost = false
@@ -59,7 +59,7 @@ struct NewPostSheet: View {
     }
 }
 
-// MARK: - Community Post Detail
+//community post detail
 struct CommunityPostView: View {
     let post: CommunityPostModel
     var body: some View {

@@ -10,7 +10,7 @@ struct AgriculturalOffice: Identifiable {
     let isOpen: Bool
     let coordinate: CLLocationCoordinate2D
 
-    // Sample Sri Lanka offices
+    
     static let samples: [AgriculturalOffice] = [
         AgriculturalOffice(
             name: "Colombo Dept. of Agriculture",

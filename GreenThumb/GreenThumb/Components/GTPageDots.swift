@@ -1,9 +1,9 @@
 import SwiftUI
 
-// Onboarding page-indicator dots
+//onboarding page indicatore dots
 struct GTPageDots: View {
     let total: Int
-    let current: Int                        // 0-indexed
+    let current: Int
 
     var body: some View {
         HStack(spacing: GTSpacing.xs) {
@@ -17,7 +17,7 @@ struct GTPageDots: View {
     }
 }
 
-// General purpose progress dots for splash
+
 struct GTLoadingDots: View {
     let count: Int = 3
     @State private var active = 0

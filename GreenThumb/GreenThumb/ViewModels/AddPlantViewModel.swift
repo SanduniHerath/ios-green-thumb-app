@@ -12,22 +12,21 @@ class AddPlantViewModel: ObservableObject {
     @Published var notes: String = ""
     @Published var tags: [String] = ["Flowering", "Outdoor", "Fragrant"]
     
-    // 📸 Image state
+    //image state
     @Published var selectedPhotoItem: PhotosPickerItem? = nil
     @Published var selectedImage: UIImage? = nil
     @Published var isUploadingImage: Bool = false
     @Published var uploadError: String? = nil
 
-    // Options
+    
     let locationOptions = ["Front garden", "Back garden", "Balcony", "Living Room", "Kitchen"]
     let potTypeOptions  = ["Ground", "Ceramic Pot", "Plastic Pot", "Terracotta", "Raised Bed"]
     
-    // Actions
+    //actions
     var onSave: ((PlantModel) -> Void)?
     var onCancel: (() -> Void)?
     
-    // ─────────────────────────────────────────────────────────────
-    // MARK: - Load image from PhotosPickerItem
+    //load image from photospickeritem
     func loadSelectedImage() {
         guard let item = selectedPhotoItem else { return }
         Task {
@@ -38,12 +37,11 @@ class AddPlantViewModel: ObservableObject {
         }
     }
     
-    // ─────────────────────────────────────────────────────────────
-    // MARK: - Save Plant (upload image first, then save to Firestore)
+    //save the plant to firestore after uploading
     func savePlant() {
         guard !name.isEmpty else { return }
         
-        // If user picked an image, upload it first
+        //if user picked an image, upload it first
         if let image = selectedImage {
             isUploadingImage = true
             Task {
@@ -54,22 +52,19 @@ class AddPlantViewModel: ObservableObject {
                 } catch {
                     self.isUploadingImage = false
                     self.uploadError = "Image upload failed: \(error.localizedDescription)"
-                    print("❌ Cloudinary Upload Error: \(error.localizedDescription)")
-                    // Still save the plant, just without an image
+                    print("Cloudinary Upload Error: \(error.localizedDescription)")
+                    //still save the plant but without an image
                     self.createAndSavePlant(imageURL: nil)
                 }
             }
         } else {
-            // No image selected — save directly
+            //no image selected
             createAndSavePlant(imageURL: nil)
         }
     }
     
     private func createAndSavePlant(imageURL: String?) {
         let ageDays = Calendar.current.dateComponents([.day], from: datePlanted, to: Date()).day ?? 0
-        
-        // 🌿 Age-based starting health: newly planted = ~95%, older plants have had more stress exposure
-        // Max penalty of -30 pts for plants over 300 days old
         let agePenalty = min(Double(ageDays) * 0.10, 30.0)
         let startingHealth = max(65.0, 97.0 - agePenalty)
         

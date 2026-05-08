@@ -1,6 +1,5 @@
 import SwiftUI
 
-// MARK: - Expert Stat Item
 struct ExpertStatItem: View {
     let value: String
     let label: String
@@ -19,7 +18,6 @@ struct ExpertStatItem: View {
     }
 }
 
-// MARK: - Specialization Tag
 struct SpecializationTag: View {
     let title: String
     
@@ -52,7 +50,6 @@ struct SpecializationTag: View {
     }
 }
 
-// MARK: - Availability Calendar
 struct AvailabilityCalendar: View {
     let days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
     let dates = ["", "1", "2", "3", "4", "5", "6"]
@@ -90,7 +87,6 @@ struct AvailabilityCalendar: View {
     }
 }
 
-// MARK: - Review Row
 struct ReviewRow: View {
     let review: ExpertReview
     

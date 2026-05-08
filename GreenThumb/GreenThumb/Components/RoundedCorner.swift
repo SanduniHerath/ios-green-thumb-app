@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// A custom shape that allows rounding specific corners of a rectangle.
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners

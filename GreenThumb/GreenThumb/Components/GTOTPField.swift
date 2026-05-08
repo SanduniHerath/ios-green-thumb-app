@@ -24,15 +24,15 @@ struct GTOTPField: View {
                         .keyboardType(.numberPad)
                         .focused($focusedIndex, equals: index)
                         .onChange(of: code[index]) { _, newVal in
-                            // Keep only last character
+                            
                             if newVal.count > 1 {
                                 code[index] = String(newVal.suffix(1))
                             }
-                            // Auto-advance
+                            
                             if !newVal.isEmpty && index < count - 1 {
                                 focusedIndex = index + 1
                             }
-                            // Auto-retreat on clear
+                            
                             if newVal.isEmpty && index > 0 {
                                 focusedIndex = index - 1
                             }

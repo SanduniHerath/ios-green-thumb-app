@@ -1,9 +1,9 @@
 import SwiftUI
 import Combine
 
-// MARK: - Navigation Destinations
+//this is the all navigation handle file
 enum AppRoute: Hashable {
-    // Auth
+    //auth
     case onboarding1
     case onboarding2
     case signIn
@@ -12,32 +12,32 @@ enum AppRoute: Hashable {
     case register
     case gardenAnalytics
 
-    // Main
+    //main
     case main
 
-    // Garden
+    //garden
     case plantDetails(PlantModel)
     case addPlant
     case growthTimeline(PlantModel)
     case addObservation(PlantModel)
     case smartScheduler(plantId: String? = nil)
 
-    // Diagnose
+   //diagnose
     case symptomChecker
     case diagnosisResult
     case careGuide(String)
     case fertiliserGuide
 
-    // Expert
+    //expert
     case expertProfile(ExpertModel)
     case bookSession(ExpertModel)
     case expertChat(ExpertModel)
     case nearbyExperts
 
-    // Community
+    //community
     case communityPost(CommunityPostModel)
 
-    // Profile
+    //profile
     case appSettings
     case notifications
 }
@@ -57,7 +57,7 @@ extension CommunityPostModel: Hashable {
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
 
-// MARK: - Router
+//Router
 @MainActor
 class AppRouter: ObservableObject {
     @Published var path = NavigationPath()

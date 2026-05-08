@@ -10,7 +10,7 @@ struct ExpertSessionChatView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - Header
+            
             VStack(spacing: 0) {
                 HStack(spacing: 16) {
                     Button(action: { router.pop() }) {
@@ -24,7 +24,7 @@ struct ExpertSessionChatView: View {
                         }
                     }
                     
-                    // Avatar
+                    //avatar
                     ZStack(alignment: .bottomTrailing) {
                         ZStack {
                             Circle()
@@ -36,7 +36,7 @@ struct ExpertSessionChatView: View {
                         }
                         
                         Circle()
-                            .fill(Color(hex: "4CAF50")) // Online green
+                            .fill(Color(hex: "4CAF50"))
                             .frame(width: 12, height: 12)
                             .overlay(Circle().stroke(Color(hex: "F2F2F2"), lineWidth: 2))
                             .offset(x: -1, y: -1)
@@ -58,7 +58,7 @@ struct ExpertSessionChatView: View {
                 .padding(.bottom, 20)
                 .background(Color(hex: "F2F2F2"))
                 
-                // MARK: - Banner
+                //banner
                 HStack(spacing: 12) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
@@ -98,7 +98,7 @@ struct ExpertSessionChatView: View {
                             .font(GTFont.labelSmall())
                             .foregroundColor(.gtTextSecondary)
                             .padding(.vertical, 16)
-                            .frame(maxWidth: .infinity) // Ensures "Today" is centered and pushes width
+                            .frame(maxWidth: .infinity)
                         
                         ForEach(expertVM.chatMessages) { message in
                             if message.isFromUser {
@@ -120,13 +120,13 @@ struct ExpertSessionChatView: View {
                     .padding(.horizontal, 24)
                     .padding(.bottom, 24)
                 }
-                .background(Color(hex: "E0E0E0")) // Apply background to ScrollView to fill width
+                .background(Color(hex: "E0E0E0"))
                 .onChange(of: expertVM.chatMessages.count) { _ in
                     withAnimation { proxy.scrollTo(expertVM.chatMessages.last?.id, anchor: .bottom) }
                 }
             }
             
-            // MARK: - Input Bar
+            //input bar
             HStack(spacing: 12) {
                 Button(action: {}) {
                     Circle()
@@ -179,8 +179,7 @@ struct ExpertSessionChatView: View {
         .toolbar(.hidden, for: .tabBar)
     }
     
-    // MARK: - Logic
-    
+    //logic handler
     private func sendMessage() {
         guard !messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         expertVM.sendChatMessage(expert: expert, content: messageText)
@@ -214,8 +213,7 @@ struct ExpertSessionChatView: View {
         .environmentObject(ExpertViewModel())
 }
 
-// MARK: - Components
-
+//components
 struct ExpertMessageBubble: View {
     let expertInitials: String
     let expertColor: Color
@@ -336,8 +334,8 @@ struct UserAttachmentBubble: View {
     }
 }
 
-// MARK: - Animated Typing Indicator
 
+//animated typing indicator
 struct TypingIndicator: View {
     @State private var dotOffset1: CGFloat = 0
     @State private var dotOffset2: CGFloat = 0
@@ -362,8 +360,6 @@ struct TypingIndicator: View {
         }
     }
 }
-
-// MARK: - Helpers
 
 struct CustomRoundedCorners: Shape {
     var tl: CGFloat = 0.0

@@ -15,41 +15,41 @@ class CareGuideViewModel: ObservableObject {
         errorMessage = nil
         
         let docId = species.lowercased().trimmingCharacters(in: .whitespaces)
-        print("🔍 Attempting to fetch care guide for: [\(docId)] from collection 'care_guides'")
+        print("Attempting to fetch care guide for: [\(docId)] from collection 'care_guides'")
         
         db.collection("care_guides").document(docId).getDocument { snapshot, error in
             self.isLoading = false
             
             if let error = error {
-                print("❌ Firestore Error: \(error.localizedDescription)")
+                print("Firestore Error: \(error.localizedDescription)")
                 self.errorMessage = error.localizedDescription
                 return
             }
             
             guard let snapshot = snapshot else {
-                print("⚠️ Snapshot is nil")
+                print("Snapshot is nil")
                 return
             }
             
             if !snapshot.exists {
-                print("⚠️ Document does not exist for species: [\(docId)] in 'care_guides'")
+                print("Document does not exist for species: [\(docId)] in 'care_guides'")
                 self.errorMessage = "No care guide found for \(species)"
                 return
             }
             
-            print("✅ Document found! Attempting to decode data...")
+            print("Document found! Attempting to decode data...")
             
             do {
                 self.careGuide = try snapshot.data(as: CareGuide.self)
-                print("🎉 Successfully decoded Care Guide for \(species)")
+                print("Successfully decoded Care Guide for \(species)")
             } catch {
-                print("❌ Decoding Error: \(error)")
+                print("Decoding Error: \(error)")
                 self.errorMessage = "Error decoding care guide: \(error.localizedDescription)"
             }
         }
     }
     
-    // Helper to seed initial data (call once if needed)
+    //helper to seed initial care log data
     func seedCareGuides() {
         let guides = [
             CareGuide(
@@ -210,9 +210,9 @@ class CareGuideViewModel: ObservableObject {
         for guide in guides {
             do {
                 try db.collection("care_guides").document(guide.speciesName).setData(from: guide)
-                print("📤 Seeded Care Guide for \(guide.speciesName)")
+                print("Seeded Care Guide for \(guide.speciesName)")
             } catch {
-                print("❌ Error seeding \(guide.speciesName): \(error)")
+                print("Error seeding \(guide.speciesName): \(error)")
             }
         }
     }

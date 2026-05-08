@@ -5,7 +5,6 @@ struct GTCommentRow: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: GTSpacing.md) {
-            // Avatar
             ZStack {
                 Circle()
                     .fill(Color(hex: comment.authorAvatarColorHex ?? "Color.gtDarkGreen"))
@@ -53,7 +52,7 @@ struct GTCommentRow: View {
     }
     
     private var timeAgo: String {
-        "45 min ago" // Mocked
+        "45 min ago"
     }
 }
 

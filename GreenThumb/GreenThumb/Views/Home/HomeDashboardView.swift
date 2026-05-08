@@ -12,7 +12,7 @@ struct HomeDashboardView: View {
         NavigationStack(path: $router.path) {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // ── Header (Forest Green) ─────────────────────────────
+                    
                     VStack(alignment: .leading, spacing: GTSpacing.xs) {
                         HStack {
                             GTAvatar(name: profileVM.profile.name, size: 40)
@@ -29,10 +29,10 @@ struct HomeDashboardView: View {
                             .accessibilityLabel("Good morning, \(profileVM.profile.name)")
 
                             Spacer()
-                            // ♿ Touch Target: bell button expanded to 44×44pt
+                            //touch target accessibility
                             Button { showNotifications = true } label: {
                                 Image(systemName: "bell.fill")
-                                    .font(.system(size: 22)) // ♿ icon — decorative, fixed size ok
+                                    .font(.system(size: 22))
                                     .foregroundColor(.white)
                                     .frame(minWidth: 44, minHeight: 44)
                                     .contentShape(Rectangle())
@@ -46,9 +46,9 @@ struct HomeDashboardView: View {
                     .padding(.horizontal, GTSpacing.lg)
                     .background(Color.gtForestGreen)
 
-                    // ── Body (Light Gray) ─────────────────────────────────
+                    
                     VStack(alignment: .leading, spacing: GTSpacing.lg) {
-                        // 2x2 Stat Grid — all cards navigate to Garden Analytics
+                        //stats cards
                         VStack(spacing: GTSpacing.sm) {
                             HStack(spacing: GTSpacing.sm) {
                                 let totalPlants = plantVM.plants.count
@@ -111,7 +111,7 @@ struct HomeDashboardView: View {
                         }
                         .padding(.top, GTSpacing.lg)
                         
-                        // Alert Banner (Dynamic — shows real diagnosis name)
+                        //alert banner
                         if let alertingPlant = plantVM.plants.first(where: { $0.status == .warning || $0.status == .critical }) {
                             let diagnosisSubtitle: String = {
                                 if let disease = alertingPlant.lastDiagnosisName {
@@ -130,7 +130,7 @@ struct HomeDashboardView: View {
                             }
                         }
 
-                        // Today's tasks
+                        //today's tasks
                         VStack(alignment: .leading, spacing: GTSpacing.sm) {
                             Text("Today's tasks")
                                 .font(GTFont.labelLarge())
@@ -161,7 +161,7 @@ struct HomeDashboardView: View {
                             }
                         }
                         
-                        // Garden health
+                        //garden health
                         VStack(alignment: .leading, spacing: GTSpacing.sm) {
                             Text("Garden health")
                                 .font(GTFont.labelLarge())
@@ -236,7 +236,7 @@ struct HomeDashboardView: View {
     }
 }
 
-// MARK: - Helper Functions
+//helper function
 extension HomeDashboardView {
     private func iconForType(_ type: TaskType) -> String {
         switch type {
@@ -267,7 +267,7 @@ extension HomeDashboardView {
     }
 }
 
-// MARK: - Local Components
+//local components
 struct GTGridStatCard: View {
     let value: String
     let label: String
@@ -323,7 +323,7 @@ struct HomeTaskRow: View {
     
     var body: some View {
         HStack(spacing: GTSpacing.md) {
-            // ♿ Touch Target: wrap 28pt circle in a 44pt invisible frame
+            //touch taget
             ZStack {
                 Circle()
                     .stroke(isDone ? Color.gtAccentGreen : Color.gtBorder, lineWidth: 2)
@@ -336,7 +336,7 @@ struct HomeTaskRow: View {
             }
             .frame(minWidth: 44, minHeight: 44)
             .contentShape(Rectangle())
-            .accessibilityHidden(true) // Entire row is one accessible element below
+            .accessibilityHidden(true)
             
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
@@ -346,7 +346,7 @@ struct HomeTaskRow: View {
                     .foregroundColor(color)
                     .font(.system(size: 20))
             }
-            .accessibilityHidden(true) // Decorative icon
+            .accessibilityHidden(true)
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
@@ -376,7 +376,7 @@ struct HomeTaskRow: View {
                 .fill(Color.white)
                 .gtShadow(GTShadow.card)
         )
-        // ♿ VoiceOver: entire row as one readable unit
+        //voice over accessibility
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title). \(subtitle). \(isDone ? "Completed" : "Due at \(time ?? "today")")")
         .accessibilityHint(isDone ? "" : "Double-tap to mark as done")

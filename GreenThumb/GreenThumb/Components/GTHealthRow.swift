@@ -2,7 +2,7 @@ import SwiftUI
 
 struct GTHealthRow: View {
     let name: String
-    let progress: Double // 0.0 - 1.0
+    let progress: Double
     var color: Color = .gtAccentGreen
     var countLabel: String? = nil
     

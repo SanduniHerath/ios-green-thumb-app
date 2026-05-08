@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GTHealthBar: View {
-    let value: Double      // 0.0 – 1.0
+    let value: Double
     var height: CGFloat = 6
     var customColor: Color? = nil
 
@@ -22,7 +22,7 @@ struct GTHealthBar: View {
             }
         }
         .frame(height: height)
-        // ♿ VoiceOver: reads the percentage value aloud
+        //here I apply voice over accessibility type
         .accessibilityLabel("Health bar")
         .accessibilityValue("\(Int(value * 100)) percent")
     }

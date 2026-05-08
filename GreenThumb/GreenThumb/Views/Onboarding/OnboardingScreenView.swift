@@ -1,8 +1,8 @@
 import SwiftUI
 
-// MARK: - Shared Onboarding Layout
+
 private struct OnboardingLayout: View {
-    let pageIndex: Int          // 0-indexed
+    let pageIndex: Int
     let totalPages: Int
     let featureLabel: String
     let headline: String
@@ -13,47 +13,47 @@ private struct OnboardingLayout: View {
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 0) {
-                // ── Upper illustration area (dark green) ──────────────────
+                
                 ZStack {
                     Color.gtForestGreen
 
-                    // Hand-holding-plant illustration using emoji + shapes
+                   
                     PlantIllustration()
                         .offset(y: 20)
                 }
                 .frame(height: geo.size.height * 0.44)
                 .ignoresSafeArea(edges: .top)
 
-                // ── White content card ────────────────────────────────────
+                
                 VStack(alignment: .leading, spacing: GTSpacing.md) {
 
-                    // Feature chip
+                    
                     GTStatusBadge.feature(featureLabel)
                         .padding(.top, GTSpacing.lg)
 
-                    // Headline — 2-line serif
+                    
                     Text(headline)
                         .font(GTFont.displayMedium())
                         .foregroundColor(.gtTextPrimary)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    // Description
+                    
                     Text(description)
                         .font(GTFont.bodyMedium())
                         .foregroundColor(.gtTextSecondary)
                         .lineSpacing(4)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    // Page dots
+                    
                     GTPageDots(total: totalPages, current: pageIndex)
                         .padding(.vertical, GTSpacing.xs)
 
                     Spacer(minLength: GTSpacing.sm)
 
-                    // Next button
+                   
                     GTButton(title: "Next", trailingIcon: "arrow.right", action: onNext)
 
-                    // Skip
+                    
                     Button(action: onSkip) {
                         Text("Skip intro")
                             .font(GTFont.labelMedium())
@@ -71,28 +71,28 @@ private struct OnboardingLayout: View {
     }
 }
 
-// MARK: - Plant illustration (hand holding seedling)
+
 private struct PlantIllustration: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-            // Leaves
+            
             ZStack {
-                // Left leaf
+                
                 Ellipse()
                     .fill(Color(red:0.36, green:0.72, blue:0.25))
                     .frame(width: 70, height: 110)
                     .rotationEffect(.degrees(-25))
                     .offset(x: -36, y: 20)
 
-                // Right leaf
+                
                 Ellipse()
                     .fill(Color(red:0.44, green:0.78, blue:0.30))
                     .frame(width: 70, height: 110)
                     .rotationEffect(.degrees(25))
                     .offset(x: 36, y: 20)
 
-                // Leaf veins
+                
                 Path { p in
                     p.move(to:   CGPoint(x: -36, y: 70))
                     p.addLine(to: CGPoint(x: -36, y: -20))
@@ -107,28 +107,28 @@ private struct PlantIllustration: View {
                 .stroke(Color.white.opacity(0.3), lineWidth: 1.5)
                 .offset(x: 0, y: 20)
 
-                // Stem
+                
                 RoundedRectangle(cornerRadius: 4)
                     .fill(Color(red:0.40, green:0.25, blue:0.12))
                     .frame(width: 10, height: 55)
                     .offset(y: 75)
             }
 
-            // Soil / earth mound
+            
             Ellipse()
                 .fill(Color(red:0.45, green:0.28, blue:0.14))
                 .frame(width: 120, height: 45)
                 .offset(y: -8)
 
-            // Hand
+            
             ZStack {
-                // Palm
+                
                 RoundedRectangle(cornerRadius: 30)
                     .fill(Color(red:0.91, green:0.73, blue:0.61))
                     .frame(width: 150, height: 55)
                     .rotationEffect(.degrees(-5))
 
-                // Fingers (simplified as rounded rects)
+                
                 HStack(spacing: 6) {
                     ForEach(0..<4, id: \.self) { _ in
                         RoundedRectangle(cornerRadius: 8)
@@ -145,7 +145,7 @@ private struct PlantIllustration: View {
     }
 }
 
-// MARK: - Screen 1
+
 struct OnboardingScreen1View: View {
     @EnvironmentObject var authVM: AuthViewModel
     @State private var goNext = false
@@ -167,7 +167,7 @@ struct OnboardingScreen1View: View {
     }
 }
 
-// MARK: - Screen 2
+
 struct OnboardingScreen2View: View {
     @State private var goNext = false
 

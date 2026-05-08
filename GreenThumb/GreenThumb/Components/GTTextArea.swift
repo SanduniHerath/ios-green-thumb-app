@@ -24,7 +24,7 @@ struct GTTextArea: View {
                 TextEditor(text: $text)
                     .font(GTFont.bodyMedium())
                     .foregroundColor(.gtTextPrimary)
-                    .scrollContentBackground(.hidden) // Required to show background color
+                    .scrollContentBackground(.hidden)
                     .padding(.horizontal, GTSpacing.sm)
                     .padding(.vertical, GTSpacing.sm)
                     .frame(minHeight: minHeight)

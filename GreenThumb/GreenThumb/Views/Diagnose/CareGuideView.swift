@@ -9,7 +9,7 @@ struct CareGuideView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - Dark Green Header
+            //dark green header
             ZStack(alignment: .topLeading) {
                 Color.gtForestGreen
                     .frame(height: 170)
@@ -84,8 +84,8 @@ struct CareGuideView: View {
     }
 }
 
-// MARK: - Subviews
 
+//subviews - watering, fertilizing
 struct WateringTabContent: View {
     let guide: CareGuide
     
@@ -130,7 +130,7 @@ struct WateringTabContent: View {
             .background(RoundedRectangle(cornerRadius: 24).fill(Color.white))
             .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.gtBorder, lineWidth: 1.5))
             
-            // MARK: - Seasonal Calendar Card
+            //seasonal calendar card
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 16) {
                     ZStack {
@@ -164,7 +164,7 @@ struct WateringTabContent: View {
                     .stroke(Color.gtBorder, lineWidth: 1.5)
             )
             
-            // Tips
+            //tips
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 16) {
                     ZStack {
@@ -200,7 +200,7 @@ struct CareTabContent: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // Sunlight
+            //sunlight
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 16) {
                     ZStack {
@@ -230,7 +230,7 @@ struct CareTabContent: View {
             .background(RoundedRectangle(cornerRadius: 24).fill(Color.white))
             .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.gtBorder, lineWidth: 1.5))
             
-            // Soil
+            //soil
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 16) {
                     ZStack {
@@ -260,7 +260,7 @@ struct CareTabContent: View {
             .background(RoundedRectangle(cornerRadius: 24).fill(Color.white))
             .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.gtBorder, lineWidth: 1.5))
             
-            // Pruning
+            //pruning
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 16) {
                     ZStack {
@@ -298,7 +298,6 @@ struct FertiliserTabContent: View {
     
     var body: some View {
         let frequencyRaw = guide.fertiliser.frequency
-        // Extract the number from the string (e.g., "14" from "Every 14 days...")
         let number = frequencyRaw.components(separatedBy: CharacterSet.decimalDigits.inverted).filter { !$0.isEmpty }.first ?? "14"
         let shortFrequency = "\(number)d"
         

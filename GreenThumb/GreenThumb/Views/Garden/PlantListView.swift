@@ -1,6 +1,5 @@
 import SwiftUI
 
-// MARK: - Plant List
 struct PlantListView: View {
     @EnvironmentObject var plantVM: PlantViewModel
     @EnvironmentObject var router: AppRouter
@@ -26,18 +25,17 @@ struct PlantListView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             ZStack(alignment: .bottomTrailing) {
-                // Background
+                //background
                 Color(red: 0.95, green: 0.95, blue: 0.95).ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    // Header
+                    //header
                     VStack(alignment: .leading, spacing: 16) {
                         Text("My Garden")
                             .font(GTFont.displayMedium())
                             .foregroundColor(.white)
-                            .padding(.top, 80) // Status bar padding
-
-                        // Search Bar
+                            .padding(.top, 80)
+                        //search bar
                         HStack(spacing: 12) {
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(.white.opacity(0.8))
@@ -64,7 +62,7 @@ struct PlantListView: View {
                     .padding(.horizontal, 24)
                     .background(Color.gtForestGreen)
 
-                    // Selection Filter
+                    //selection filter
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
                             ForEach(filters, id: \.self) { filter in
@@ -90,7 +88,7 @@ struct PlantListView: View {
                         .padding(.vertical, 20)
                     }
 
-                    // Grid
+                    //grid
                     ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: columns, spacing: 18) {
                             ForEach(filtered) { plant in
@@ -100,11 +98,11 @@ struct PlantListView: View {
                             }
                         }
                         .padding(.horizontal, 24)
-                        .padding(.bottom, 100) // Space for TabBar/FAB
+                        .padding(.bottom, 100)
                     }
                 }
 
-                // FAB
+                //FAB buttion add plant
                 Button(action: {
                     router.navigate(to: .addPlant)
                 }) {

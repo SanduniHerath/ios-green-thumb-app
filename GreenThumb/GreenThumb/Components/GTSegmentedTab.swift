@@ -18,7 +18,7 @@ struct GTSegmentedTab: View {
                                 .font(GTFont.labelLarge())
                                 .foregroundColor(selectedIndex == idx ? .gtTextPrimary : .gtTextMuted)
                             
-                            // Underline
+                            
                             Rectangle()
                                 .fill(selectedIndex == idx ? Color.gtDarkGreen : Color.clear)
                                 .frame(height: 4)

@@ -13,16 +13,16 @@ struct AddPlantView: View {
             Color.gtBackground.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Header
+               
                 headerView
                     .padding(.top, GTSpacing.sm)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: GTSpacing.lg) {
-                        // Photo Picker Region
+                        
                         photoPickerBox
                         
-                        // Form Fields
+                       //form fields
                         VStack(spacing: GTSpacing.md) {
                             GTTextField(
                                 label: "Plant name",
@@ -54,13 +54,13 @@ struct AddPlantView: View {
                                 )
                             }
                             
-                            // Date Planted
+                            //date planted
                             datePlantedField
                             
-                            // Tags
+                            //tags
                             tagsSection
                             
-                            // Notes
+                            //notes
                             GTTextArea(
                                 label: "Notes (optional)",
                                 placeholder: "Any initial observation about the plant...",
@@ -68,7 +68,7 @@ struct AddPlantView: View {
                             )
                         }
                         
-                        // Action Buttons
+                        //action buttons
                         VStack(spacing: GTSpacing.sm) {
                             GTButton(
                                 title: viewModel.isUploadingImage ? "Uploading photo..." : "Continue to care setup",
@@ -102,13 +102,13 @@ struct AddPlantView: View {
         .navigationBarHidden(true)
         .onAppear {
             viewModel.onSave = { plant in
-                // 1. Save the plant
+                //save the plant
                 plantVM.addPlant(plant)
                 
-                // 2. Generate the 4 default care tasks
+                //generate the 4 default care tasks
                 schedulerVM.generateDefaultTasks(for: plant)
                 
-                // 3. Navigate away
+                //navigate away
                 router.pop()
                 router.navigate(to: .plantDetails(plant))
             }
@@ -116,8 +116,7 @@ struct AddPlantView: View {
         }
     }
     
-    // MARK: - Subviews
-    
+    //subviews
     private var headerView: some View {
         HStack(spacing: GTSpacing.md) {
             Button {
@@ -151,7 +150,7 @@ struct AddPlantView: View {
             photoLibrary: .shared()
         ) {
             ZStack {
-                // Show thumbnail if image is selected, otherwise show placeholder
+                //show thumbnail if image is selected
                 if let selectedImage = viewModel.selectedImage {
                     Image(uiImage: selectedImage)
                         .resizable()
@@ -161,7 +160,6 @@ struct AddPlantView: View {
                         .clipped()
                         .clipShape(RoundedRectangle(cornerRadius: GTRadius.lg))
                         .overlay(
-                            // Edit overlay
                             VStack {
                                 Spacer()
                                 HStack {
@@ -178,7 +176,7 @@ struct AddPlantView: View {
                             }
                         )
                 } else {
-                    // Empty placeholder
+                   //otherwise show empty placeholder
                     VStack(spacing: 8) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 12)
@@ -317,8 +315,6 @@ struct AddPlantView: View {
         }
     }
 }
-
-// FlowLayout is now moved to GTMiscComponents.swift
 
 #Preview {
     AddPlantView()

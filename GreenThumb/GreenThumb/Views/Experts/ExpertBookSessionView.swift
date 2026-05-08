@@ -14,7 +14,7 @@ struct ExpertBookSessionView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
+            
             HStack {
                 Button(action: { router.pop() }) {
                     ZStack {
@@ -37,7 +37,7 @@ struct ExpertBookSessionView: View {
             .padding(.horizontal, GTSpacing.lg)
             .padding(.top, 80)
             
-            // Expert Info
+            //expert info section
             HStack(spacing: GTSpacing.md) {
                 ZStack {
                     Circle()
@@ -70,10 +70,10 @@ struct ExpertBookSessionView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: GTSpacing.xl) {
                     
-                    // Availability this week
+                    //availability this week
                     AvailabilityCalendarView(selectedDate: $selectedDate)
                     
-                    // Available time slots
+                    
                     VStack(alignment: .leading, spacing: GTSpacing.lg) {
                         Text("Available time slots")
                             .font(GTFont.labelLarge())
@@ -90,10 +90,10 @@ struct ExpertBookSessionView: View {
                     
                     Spacer(minLength: 40)
                     
-                    // Confirm Button
+                    //confirm button
                     Button(action: {
-                        // Create a mock date for the selected day in current week
-                        let date = Date() // In a real app, calculate based on selectedDate
+                        //create a mock data for the selected day in current week
+                        let date = Date()
                         expertVM.bookSession(expert: expert, date: date, timeSlot: selectedTime)
                     }) {
                         HStack {
@@ -113,22 +113,22 @@ struct ExpertBookSessionView: View {
                 .padding(GTSpacing.lg)
             }
         }
-        .background(Color(hex: "D9D9D9")) // Matched gray background
+        .background(Color(hex: "D9D9D9"))
         .ignoresSafeArea(edges: .top)
         .navigationBarHidden(true)
         .onChange(of: expertVM.bookingSuccess) { success in
             if success {
-                // Add notification
+                //add notification
                 notifyVM.addNotification(
                     type: .expert,
                     title: "Session Confirmed",
                     message: "Success! Your session with \(expert.name) on May \(selectedDate) at \(selectedTime) is confirmed."
                 )
                 
-                // Navigate
+                //navigate
                 router.navigate(to: .notifications)
                 
-                // Reset flag
+                //reset flag
                 expertVM.bookingSuccess = false
             }
         }
@@ -149,7 +149,7 @@ struct ExpertBookSessionView: View {
     }
 }
 
-// MARK: - Subviews
+//subviews
 struct AvailabilityCalendarView: View {
     @Binding var selectedDate: String
     let days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]

@@ -6,7 +6,7 @@ import Combine
 
 class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
-    // MARK: - Published State
+    
     @Published var offices: [AgriculturalOffice] = AgriculturalOffice.samples
     @Published var selectedOffice: AgriculturalOffice? = nil
     @Published var cameraPosition: MapCameraPosition = .region(
@@ -20,14 +20,14 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
     @Published var routeError: String? = nil
     @Published var showDetailCard: Bool = false
 
-    // MARK: - Constants
+   //constants
     private let nearbyRadiusKm: Double = 200.0
 
-    // MARK: - Private
+    
     private var locationManager: CLLocationManager?
     @Published private(set) var userLocation: CLLocation?
 
-    // MARK: - Computed: Nearby offices sorted by distance
+    //nearby offices sorted by distance
     var nearbyOffices: [AgriculturalOffice] {
         let reference = effectiveLocation
         return offices
@@ -46,7 +46,7 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
             }
     }
 
-    /// Returns real GPS location if available AND near Sri Lanka, otherwise Colombo fallback
+    //returns real GPS cordinate if if available and near Sri Lanka, otherwise set to fallback to Colombo
     var effectiveLocation: CLLocation {
         if let loc = userLocation, isNearSriLanka(loc) {
             return loc
@@ -54,7 +54,7 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
         return CLLocation(latitude: 6.9271, longitude: 79.8612) // Colombo city center
     }
 
-    /// True when we're using Colombo as fallback (simulator or location outside Sri Lanka)
+    
     var usingLocationFallback: Bool {
         guard let loc = userLocation else { return true }
         return !isNearSriLanka(loc)
@@ -68,7 +68,6 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
     var nearbyCount: Int { nearbyOffices.count }
 
 
-    // MARK: - Init
     override init() {
         super.init()
         let manager = CLLocationManager()
@@ -77,8 +76,6 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
         self.locationManager = manager
         manager.requestWhenInUseAuthorization()
     }
-
-    // MARK: - CLLocationManagerDelegate
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedWhenInUse ||
@@ -89,17 +86,17 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        // Store location silently for distance/direction calculations only.
-        // We do NOT auto-center the map — it always opens on Sri Lanka.
+        
+        // dont aauto center the map, it always open on LK
         userLocation = location
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("❌ Location error: \(error.localizedDescription)")
+        print("Location error: \(error.localizedDescription)")
     }
 
-    // MARK: - Pin Selection
-
+    
+    //pin selection
     func selectOffice(_ office: AgriculturalOffice) {
         if selectedOffice?.id != office.id { route = nil }
         selectedOffice = office
@@ -118,20 +115,16 @@ class NearbyExpertsMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
         route = nil
     }
 
-    // MARK: - Open in Apple Maps
+    
     func openInAppleMaps(_ office: AgriculturalOffice) {
         let start = effectiveLocation.coordinate
         let destination = office.coordinate
-        
-        // Use the Apple Maps URL scheme to force a route between two specific points
         let urlString = "http://maps.apple.com/?saddr=\(start.latitude),\(start.longitude)&daddr=\(destination.latitude),\(destination.longitude)&dirflg=d"
         
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url)
         }
     }
-
-    // MARK: - Helpers
 
     func formattedDistance(to office: AgriculturalOffice) -> String? {
         let reference = effectiveLocation

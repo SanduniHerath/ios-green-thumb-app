@@ -7,7 +7,7 @@ struct NotificationsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
+            
             HStack {
                 Button { router.pop() } label: {
                     ZStack {
@@ -36,7 +36,7 @@ struct NotificationsView: View {
             .padding(.bottom, GTSpacing.md)
             .background(Color.gtBackground)
             
-            // Content
+            
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: GTSpacing.lg) {
                     if notifyVM.notifications.isEmpty {
@@ -55,12 +55,12 @@ struct NotificationsView: View {
                             NotificationCard(
                                 title: notification.title,
                                 subtitle: notification.message,
-                                time: "Just now", // In a real app, format notification.timestamp
+                                time: "Just now",
                                 icon: iconForType(notification.type),
                                 color: colorForType(notification.type),
                                 actionTitle: notification.type == .expert ? "View Session" : nil,
                                 action: {
-                                    // Handle actions
+                                    
                                 }
                             )
                         }
@@ -99,7 +99,7 @@ struct NotificationsView: View {
     }
 }
 
-// MARK: - Reusable Local Components
+//local components
 struct FilterTab: View {
     let title: String
     let isSelected: Bool

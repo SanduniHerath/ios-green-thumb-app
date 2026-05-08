@@ -6,9 +6,9 @@ struct GTCommunityPostCard: View {
     var body: some View {
         NavigationLink(destination: CommunityPostDetailView(post: post)) {
             VStack(alignment: .leading, spacing: 0) {
-            // Header
+            //header
             HStack(spacing: GTSpacing.sm) {
-                // Avatar
+                //avaar
                 ZStack {
                     Circle()
                         .fill(Color(hex: post.avatarColorHex ?? "Color.gtDarkGreen"))
@@ -30,7 +30,7 @@ struct GTCommunityPostCard: View {
                 
                 Spacer()
                 
-                // Category Tag
+                //category tag
                 if let category = post.category {
                     Text(category)
                         .font(.system(size: 11, weight: .bold))
@@ -43,16 +43,16 @@ struct GTCommunityPostCard: View {
             }
             .padding(GTSpacing.md)
             
-            // Image Section (Optional)
+            //image section
             if let imageURL = post.imageURL {
                 ZStack {
-                    Color.gtPaleGreen.opacity(0.5) // Background for the image
+                    Color.gtPaleGreen.opacity(0.5)
                     
-                    Image(systemName: "leaf.fill") // Placeholder for actual image
+                    Image(systemName: "leaf.fill")
                         .font(.system(size: 60))
                         .foregroundColor(.gtDarkGreen.opacity(0.2))
                     
-                    // In a real app, this would be an AsyncImage
+                    
                      Rectangle()
                          .fill(Color.gtLightGreen.opacity(0.3))
                          .overlay(
@@ -64,7 +64,7 @@ struct GTCommunityPostCard: View {
                 .clipped()
             }
             
-            // Text Section
+            //text section
             VStack(alignment: .leading, spacing: GTSpacing.sm) {
                 if let title = post.title {
                     Text(title)
@@ -78,7 +78,7 @@ struct GTCommunityPostCard: View {
                     .foregroundColor(.gtTextSecondary)
                     .lineLimit(3)
                 
-                // Content specific tags (Blight, Cocopeat etc)
+                //content specific tags
                 if post.category == "Disease" {
                     HStack {
                         Spacer()
@@ -93,7 +93,7 @@ struct GTCommunityPostCard: View {
                     .padding(.top, 4)
                 }
                 
-                // Footer Tags
+                //footer tags
                 HStack(spacing: GTSpacing.sm) {
                     ForEach(post.tags, id: \.self) { tag in
                         Text(tag)
@@ -116,7 +116,7 @@ struct GTCommunityPostCard: View {
                 .stroke(Color.gtBorder.opacity(0.5), lineWidth: 1)
         )
         .gtShadow(GTShadow.card)
-        .buttonStyle(PlainButtonStyle()) // Ensure it looks like a card, not a nav link
+        .buttonStyle(PlainButtonStyle())
         }
     }
     
@@ -129,13 +129,13 @@ struct GTCommunityPostCard: View {
     }
     
     private var timeAgo: String {
-        "2 hours ago" // Mocked
+        "2 hours ago"
     }
     
     private var categoryColorHex: String {
         switch post.category {
-        case "Disease": return "EE9E9E" // Reddish
-        case "Soil": return "A8CC80" // Green
+        case "Disease": return "EE9E9E"
+        case "Soil": return "A8CC80" 
         default: return "A8CC80"
         }
     }

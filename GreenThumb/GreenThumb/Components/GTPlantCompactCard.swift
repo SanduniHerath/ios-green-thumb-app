@@ -3,8 +3,8 @@ import SwiftUI
 struct GTPlantCompactCard: View {
     let name: String
     let health: Int
-    let icon: String // Emoji
-    var imageURL: String? = nil // Real photo URL
+    let icon: String
+    var imageURL: String? = nil 
     let borderColor: Color
     
     var body: some View {

@@ -1,6 +1,4 @@
 import SwiftUI
-
-/// A custom layout that arranges subviews in a flow, wrapping to the next line when needed.
 struct FlowLayout: Layout {
     var spacing: CGFloat = 8
 

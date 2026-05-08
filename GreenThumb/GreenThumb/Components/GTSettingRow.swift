@@ -17,7 +17,7 @@ struct GTSettingRow: View {
         self.trailingContent = trailingContent
     }
     
-    // Convenience init for toggles
+    //convenience init for toggles
     init(icon: String, iconBgColor: Color, title: String, subtitle: String? = nil, showNewBadge: Bool = false, isOn: Binding<Bool>) {
         self.icon = icon
         self.iconBgColor = iconBgColor
@@ -33,7 +33,7 @@ struct GTSettingRow: View {
 
     var body: some View {
         HStack(spacing: GTSpacing.md) {
-            // Icon
+            
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(iconBgColor.opacity(0.15))
@@ -43,7 +43,7 @@ struct GTSettingRow: View {
                     .foregroundColor(iconBgColor)
             }
             
-            // Text
+            
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
                     Text(title)
@@ -71,7 +71,7 @@ struct GTSettingRow: View {
             
             Spacer()
             
-            // Trailing Content
+            
             if let trailingContent {
                 trailingContent
             }

@@ -9,7 +9,7 @@ struct CommunityPostDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
+            
             HStack {
                 Button { dismiss() } label: {
                     Image(systemName: "arrow.left")
@@ -23,13 +23,13 @@ struct CommunityPostDetailView: View {
                 Spacer()
             }
             .padding(.horizontal, GTSpacing.lg)
-            .padding(.top, 64) // Lowered header as requested
+            .padding(.top, 64)
             .padding(.bottom, GTSpacing.md)
             .background(Color(hex: "E5E5E5"))
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    // Author Row
+                    //author row
                     HStack(spacing: GTSpacing.sm) {
                         ZStack {
                             Circle()
@@ -53,7 +53,7 @@ struct CommunityPostDetailView: View {
                     .padding(GTSpacing.lg)
                     .background(Color.white)
                     
-                    // Post Media
+                    //post media
                     if let imageURL = post.imageURL {
                         ZStack {
                             Color.gtPaleGreen.opacity(0.5)
@@ -66,7 +66,7 @@ struct CommunityPostDetailView: View {
                         .background(Color.white)
                     }
                     
-                    // Post Content
+                    //post content
                     VStack(alignment: .leading, spacing: GTSpacing.md) {
                         if let title = post.title {
                             Text(title)
@@ -81,7 +81,7 @@ struct CommunityPostDetailView: View {
                             .foregroundColor(.gtTextSecondary)
                             .lineSpacing(4)
                         
-                        // Tags
+                        //tags
                         HStack(spacing: GTSpacing.sm) {
                             ForEach(post.tags, id: \.self) { tag in
                                 Text(tag)
@@ -98,13 +98,13 @@ struct CommunityPostDetailView: View {
                     .padding(GTSpacing.lg)
                     .background(Color.white)
                     
-                    // Engagement Bar
+                    //engagement bar
                     GTPostEngagementBar(
                         likes: post.likes,
                         comments: post.commentsList.count
                     )
                     
-                    // Comments Section
+                    //comments section
                     VStack(alignment: .leading, spacing: GTSpacing.md) {
                         Text("Comments - \(String(format: "%02d", post.commentsList.count))")
                             .font(GTFont.labelLarge())
@@ -125,7 +125,6 @@ struct CommunityPostDetailView: View {
             }
             .background(Color(hex: "E0E0E0"))
             .safeAreaInset(edge: .bottom) {
-                // Bottom Input Bar - Refined for keyboard behavior
                 HStack(spacing: GTSpacing.md) {
                     Circle()
                         .fill(Color.gtForestGreen)
